@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/BetterInspector/Foldouts/FoldoutContainer.cs" type="Script" id=1]
+[ext_resource path="res://addons/BetterInspector/Foldouts/CheckboxTheme.theme" type="Theme" id=2]
+
+[node name="Foldout" type="VBoxContainer"]
+margin_right = 89.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 0, 20 )
+size_flags_vertical = 9
+custom_constants/separation = 0
+script = ExtResource( 1 )
+foldButtonPath = NodePath("Button")
+contentPath = NodePath("HBoxContainer/VBoxContainer")
+
+[node name="Button" type="Button" parent="."]
+margin_right = 89.0
+margin_bottom = 18.0
+focus_mode = 0
+theme = ExtResource( 2 )
+enabled_focus_mode = 0
+text = "Fouldout"
+align = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_top = 18.0
+margin_right = 89.0
+margin_bottom = 18.0
+
+[node name="Indention" type="Control" parent="HBoxContainer"]
+margin_right = 10.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 14.0
+margin_right = 89.0
+size_flags_horizontal = 3

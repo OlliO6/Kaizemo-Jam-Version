@@ -1,0 +1,39 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "RichTextEffect",
+"class": "TintTextEffect",
+"language": "GDScript",
+"path": "res://addons/DebugOverlay/RichTextColorEfx.gd"
+} ]
+_global_script_class_icons={
+"TintTextEffect": ""
+}
+
+[application]
+
+config/name="RocketBeansGame"
+
+[autoload]
+
+Debug="*res://addons/DebugOverlay/DebugOverlay.tscn"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/BetterFileSystem/plugin.cfg", "res://addons/BetterInspector/plugin.cfg", "res://addons/DebugOverlay/plugin.cfg", "res://addons/Diadot/plugin.cfg", "res://addons/Shake/plugin.cfg" )
+
+[gui]
+
+common/drop_mouse_on_gui_input_disabled=true
+
+[physics]
+
+common/enable_pause_aware_picking=true
