@@ -26,11 +26,14 @@ run/main_scene="res://Playground.tscn"
 [autoload]
 
 Debug="*res://addons/DebugOverlay/DebugOverlay.tscn"
+InputManager="*res://Singletons/InputManager.cs"
 
 [display]
 
 window/size/width=384
 window/size/height=216
+window/size/test_width=1080
+window/size/test_height=1920
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
@@ -64,6 +67,24 @@ texture={
 "size_limit": 0,
 "stream": false,
 "svg/scale": 1.0
+}
+
+[input]
+
+MoveLeft={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":65,"unicode":0,"echo":false,"script":null)
+ ]
+}
+MoveRight={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":68,"unicode":0,"echo":false,"script":null)
+ ]
+}
+Jump={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":32,"unicode":0,"echo":false,"script":null)
+ ]
 }
 
 [physics]
