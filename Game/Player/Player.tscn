@@ -341,7 +341,7 @@ nodes/Land/position = Vector2( 580, 100 )
 nodes/RunSpeed/node = SubResource( 6 )
 nodes/RunSpeed/position = Vector2( 120, 240 )
 nodes/output/position = Vector2( 1000, 0 )
-node_connections = [ "output", 0, "Grounded", "Land", 0, "GroundedState", "Land", 1, "Animation 3", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "RunSpeed", 0, "Animation", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed" ]
+node_connections = [ "output", 0, "Grounded", "Land", 0, "GroundedState", "Land", 1, "Animation 3", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "RunSpeed", 0, "Animation" ]
 
 [sub_resource type="Gradient" id=17]
 offsets = PoolRealArray( 0, 0.678715, 0.88755, 1 )
@@ -417,9 +417,10 @@ gravity = 235.0
 jumpingGravity = 200.0
 maxFallingSpeed = 164.513
 jumpCancelStrenght = 0.31
-groundedAcceleration = 490.418
+groundedAcceleration = 469.037
 airAcceleration = 278.899
-groundedDamping = 0.477
+groundDamping = 0.35
+groundedStopDamping = 0.55
 airDamping = 0.216
 diveUpVelocity = Vector2( 40, -150 )
 diveHorizontalVelocity = Vector2( 175, -35 )

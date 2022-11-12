@@ -18,7 +18,8 @@ public partial class Player : KinematicBody2D
     [Export] public float gravity, jumpingGravity, maxFallingSpeed;
     [Export(PropertyHint.Range, "0,1")] public float jumpCancelStrenght;
     [Export] public float groundedAcceleration, airAcceleration;
-    [Export(PropertyHint.Range, "0,1")] public float groundedDamping;
+    [Export(PropertyHint.Range, "0,1")] public float groundDamping;
+    [Export(PropertyHint.Range, "0,1")] public float groundedStopDamping;
     [Export(PropertyHint.Range, "0,1")] public float airDamping;
     [Export] public Vector2 diveUpVelocity;
     [Export, EndFoldout] public Vector2 diveHorizontalVelocity;
@@ -107,7 +108,7 @@ public partial class Player : KinematicBody2D
             if (isGrounded)
             {
                 velocity.x += horizontalInput * groundedAcceleration * delta;
-                velocity.x *= Mathf.Pow(1f - groundedDamping, delta * 10f);
+                velocity.x *= Mathf.Pow(1f - (horizontalInput == 0 ? groundedStopDamping : groundDamping), delta * 10f);
                 return;
             }
 

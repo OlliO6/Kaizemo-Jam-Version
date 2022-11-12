@@ -33,9 +33,11 @@ position = Vector2( 55, 15 )
 deaciveTime = 3.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+visible = false
 position = Vector2( 15, 58 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2( 0, -4 )
 shape = SubResource( 5 )
+disabled = true
 one_way_collision = true
