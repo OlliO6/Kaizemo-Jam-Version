@@ -12,7 +12,7 @@ public class InputManager : Node
     public static event Action JumpPressed;
     public static event Action JumpReleased;
 
-    public static bool IsJumpBuffered => Instance.jumpTimer.TimeLeft != 0;
+    public static bool IsJumpBuffered => Instance.jumpTimer.TimeLeft != 0 && !Instance.jumpTimer.IsStopped();
     public static bool IsJumpHeld => Input.IsActionPressed("Jump");
 
     private Timer jumpTimer = new()
@@ -61,4 +61,8 @@ public class InputManager : Node
         jumpTimer.Start();
     }
 
+    public static void UseJumpBuffer()
+    {
+        Instance.jumpTimer.Stop();
+    }
 }

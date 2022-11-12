@@ -8,7 +8,7 @@ public partial class Player : KinematicBody2D
 {
     const float JumpLenienceTime = 0.1f;
 
-    [NodeRef] public AnimationPlayer animPlayer;
+    [NodeRef] public AnimationTree anim;
 
     [Export, StartFoldout("Movement")] public float jumpVelocity;
     [Export] public float gravity, jumpingGravity, maxFallingSpeed;
@@ -54,7 +54,7 @@ public partial class Player : KinematicBody2D
         HandleHorizontalMovement();
         HandleVerticalMovement();
 
-        velocity = MoveAndSlide(velocity, Vector2.Up);
+        velocity = MoveAndSlide(velocity, Vector2.Up, maxSlides: 1);
 
         Animate(horizontalInput, isGrounded);
 
@@ -99,7 +99,6 @@ public partial class Player : KinematicBody2D
             if (isGrounded)
             {
                 groundRememberTimer.Start();
-                velocity.y = 1;
                 isJumping = false;
                 return;
             }
@@ -114,12 +113,29 @@ public partial class Player : KinematicBody2D
 
     private void Animate(float horizontalInput, bool isGrounded)
     {
+        if (!isGrounded)
+        {
+            anim.SetParam("State/current", (int)AnimationState.InAir);
+            anim.SetParam("FallSpeed/blend_position", velocity.y);
+            return;
+        }
+
+        if (horizontalInput != 0)
+        {
+            anim.SetParam("State/current", (int)AnimationState.Run);
+            anim.SetParam("RunSpeed/scale", horizontalInput.Abs());
+            return;
+        }
+
+        anim.SetParam("State/current", (int)AnimationState.Idle);
     }
 
     private void Jump()
     {
         isJumping = true;
         velocity.y = jumpVelocity;
+
+        InputManager.UseJumpBuffer();
 
         if (!InputManager.IsJumpHeld)
             CancelJump();
@@ -131,5 +147,13 @@ public partial class Player : KinematicBody2D
 
         isJumping = false;
         velocity.y *= 1f - jumpCancelStrenght;
+    }
+
+
+    private enum AnimationState
+    {
+        Idle,
+        Run,
+        InAir
     }
 }
