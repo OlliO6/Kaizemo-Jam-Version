@@ -9,6 +9,7 @@ public partial class Player : KinematicBody2D
     const float JumpLenienceTime = 0.1f;
 
     [NodeRef] public AnimationTree anim;
+    [NodeRef] public Particles2D jumpParticles;
 
     [Export, StartFoldout("Movement")] public float jumpVelocity;
     [Export] public float gravity, jumpingGravity, maxFallingSpeed;
@@ -19,7 +20,7 @@ public partial class Player : KinematicBody2D
 
 
     public Vector2 velocity;
-    private bool isJumping;
+    private bool isJumping, isGrounded;
 
     private Timer groundRememberTimer = new()
     {
@@ -47,16 +48,14 @@ public partial class Player : KinematicBody2D
 
     public override void _PhysicsProcess(float delta)
     {
-        bool isGrounded = IsOnFloor();
-
         float horizontalInput = InputManager.GetPlayerHorizontalInput();
 
         HandleHorizontalMovement();
         HandleVerticalMovement();
+        Animate(horizontalInput);
 
-        velocity = MoveAndSlide(velocity, Vector2.Up, maxSlides: 1);
-
-        Animate(horizontalInput, isGrounded);
+        velocity = MoveAndSlide(velocity, Vector2.Up, maxSlides: isJumping ? 1 : 4);
+        isGrounded = IsOnFloor();
 
         void HandleHorizontalMovement()
         {
@@ -99,6 +98,7 @@ public partial class Player : KinematicBody2D
             if (isGrounded)
             {
                 groundRememberTimer.Start();
+                velocity.y = 1;
                 isJumping = false;
                 return;
             }
@@ -111,8 +111,9 @@ public partial class Player : KinematicBody2D
         }
     }
 
-    private void Animate(float horizontalInput, bool isGrounded)
+    private void Animate(float horizontalInput)
     {
+        Debug.LogPFrame(this, $"Is grounded: {isGrounded}");
         if (!isGrounded)
         {
             anim.SetParam("State/current", (int)AnimationState.InAir);
@@ -139,6 +140,8 @@ public partial class Player : KinematicBody2D
 
         if (!InputManager.IsJumpHeld)
             CancelJump();
+
+        jumpParticles.Restart();
     }
 
     private void CancelJump()

@@ -1,8 +1,9 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Player/Player.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.cs" type="Script" id=2]
 [ext_resource path="res://Particles/DustParticle.png" type="Texture" id=3]
+[ext_resource path="res://Particles/DustMat.tres" type="Material" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3.5, 7.5 )
@@ -47,7 +48,7 @@ tracks/2/keys = {
 "values": [ 3 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("RunDustParticles:emitting")
+tracks/3/path = NodePath("RunParticles:emitting")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -100,7 +101,7 @@ tracks/2/keys = {
 "values": [ 1, 2 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("RunDustParticles:emitting")
+tracks/3/path = NodePath("RunParticles:emitting")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -152,7 +153,7 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("RunDustParticles:emitting")
+tracks/3/path = NodePath("RunParticles:emitting")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -161,7 +162,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true ]
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -203,7 +204,7 @@ tracks/2/keys = {
 "values": [ 1 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("RunDustParticles:emitting")
+tracks/3/path = NodePath("RunParticles:emitting")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -244,7 +245,7 @@ tracks/1/keys = {
 "values": [ 0, 1, 0, 1 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("RunDustParticles:emitting")
+tracks/2/path = NodePath("RunParticles:emitting")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -298,26 +299,43 @@ nodes/RunSpeed/position = Vector2( -40, 180 )
 nodes/State/node = SubResource( 7 )
 nodes/State/position = Vector2( 220, 200 )
 nodes/output/position = Vector2( 620, 140 )
-node_connections = [ "RunSpeed", 0, "Animation", "State", 0, "Animation 2", "State", 1, "RunSpeed", "State", 2, "FallSpeed", "output", 0, "State" ]
+node_connections = [ "State", 0, "Animation 2", "State", 1, "RunSpeed", "State", 2, "FallSpeed", "RunSpeed", 0, "Animation", "output", 0, "State" ]
 
-[sub_resource type="CanvasItemMaterial" id=15]
-particles_animation = true
-particles_anim_h_frames = 3
-particles_anim_v_frames = 1
-particles_anim_loop = false
+[sub_resource type="Gradient" id=17]
+offsets = PoolRealArray( 0, 0.678715, 0.88755, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=18]
+gradient = SubResource( 17 )
 
 [sub_resource type="ParticlesMaterial" id=16]
 emission_shape = 2
 emission_box_extents = Vector3( 1.5, 0.2, 1 )
 flag_disable_z = true
-direction = Vector3( -1, -0.197, 0 )
+direction = Vector3( -1, 0, 0 )
 spread = 2.98
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 5.54
-orbit_velocity = -0.08
+gravity = Vector3( 0, -7, 0 )
+initial_velocity = 4.95
+initial_velocity_random = 0.26
+orbit_velocity = 0.0
 orbit_velocity_random = 1.0
+damping = 50.0
+color_ramp = SubResource( 18 )
 anim_offset = 1.0
 anim_offset_random = 0.43
+
+[sub_resource type="ParticlesMaterial" id=19]
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+spread = 80.27
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 20.27
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 55.41
+color_ramp = SubResource( 18 )
+anim_offset = 0.9
+anim_offset_random = 0.66
 
 [node name="Player" type="KinematicBody2D"]
 z_index = 1
@@ -332,7 +350,7 @@ airAcceleration = 286.134
 groundedDamping = 0.475
 airDamping = 0.248
 _anim = NodePath("AnimationTree")
-_dustParticles = NodePath("RunDustParticles")
+_jumpParticles = NodePath("JumpParticles")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.5, 0.5 )
@@ -366,11 +384,10 @@ parameters/State/current = 2
 
 [node name="Timer" type="Timer" parent="."]
 
-[node name="RunDustParticles" type="Particles2D" parent="."]
-material = SubResource( 15 )
+[node name="RunParticles" type="Particles2D" parent="."]
+show_behind_parent = true
+material = ExtResource( 4 )
 position = Vector2( 0, 8 )
-z_index = -1
-z_as_relative = false
 emitting = false
 amount = 5
 lifetime = 0.9
@@ -379,4 +396,19 @@ randomness = 0.34
 fixed_fps = 24
 local_coords = false
 process_material = SubResource( 16 )
+texture = ExtResource( 3 )
+
+[node name="JumpParticles" type="Particles2D" parent="."]
+show_behind_parent = true
+material = ExtResource( 4 )
+position = Vector2( 0, 6 )
+emitting = false
+amount = 3
+lifetime = 0.62
+one_shot = true
+explosiveness = 1.0
+randomness = 0.56
+fixed_fps = 24
+local_coords = false
+process_material = SubResource( 19 )
 texture = ExtResource( 3 )
