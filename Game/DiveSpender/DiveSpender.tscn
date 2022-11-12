@@ -30,6 +30,8 @@ radius = 5.0
 
 [node name="DiveSpender" type="Area2D"]
 script = ExtResource( 2 )
+deaciveTime = 5.0
+deaciveColor = Color( 0.658824, 0.658824, 0.658824, 0.392157 )
 _sprite = NodePath("ViewportSprite")
 
 [node name="Viewport" type="Viewport" parent="."]

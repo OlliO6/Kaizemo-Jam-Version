@@ -30,7 +30,7 @@ environment = SubResource( 4 )
 
 [node name="DiveSpender" parent="." instance=ExtResource( 3 )]
 position = Vector2( 55, 15 )
-_sprite = null
+deaciveTime = 3.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2( 15, 58 )

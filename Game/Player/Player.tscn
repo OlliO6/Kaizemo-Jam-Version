@@ -468,8 +468,6 @@ parameters/GroundedState/current = 0
 parameters/Land/active = false
 parameters/RunSpeed/scale = 1.0
 
-[node name="Timer" type="Timer" parent="."]
-
 [node name="RunParticles" type="Particles2D" parent="."]
 show_behind_parent = true
 material = ExtResource( 4 )
