@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Game/Player/Player.cs" type="Script" id=1]
 [ext_resource path="res://Particles/DustParticle.png" type="Texture" id=2]
@@ -165,6 +165,22 @@ tracks/3/keys = {
 "values": [ false ]
 }
 
+[sub_resource type="Animation" id=21]
+resource_name = "Land"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 0.189465, 1.41421, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.2, 0.8 ), Vector2( 1, 1 ) ]
+}
+
 [sub_resource type="Animation" id=3]
 length = 0.001
 tracks/0/type = "value"
@@ -260,6 +276,9 @@ tracks/2/keys = {
 [sub_resource type="AnimationNodeAnimation" id=9]
 animation = "Idle"
 
+[sub_resource type="AnimationNodeAnimation" id=22]
+animation = "Land"
+
 [sub_resource type="AnimationNodeAnimation" id=5]
 animation = "Run"
 
@@ -275,31 +294,47 @@ blend_point_0/pos = 1.0
 blend_point_1/node = SubResource( 13 )
 blend_point_1/pos = -1.0
 
-[sub_resource type="AnimationNodeTimeScale" id=6]
+[sub_resource type="AnimationNodeTransition" id=24]
+input_count = 2
+input_0/name = "No"
+input_0/auto_advance = false
+input_1/name = "Yes"
+input_1/auto_advance = false
 
-[sub_resource type="AnimationNodeTransition" id=7]
-input_count = 3
+[sub_resource type="AnimationNodeTransition" id=25]
+input_count = 2
 input_0/name = "Idle"
 input_0/auto_advance = false
 input_1/name = "Run"
 input_1/auto_advance = false
-input_2/name = "InAir"
-input_2/auto_advance = false
+
+[sub_resource type="AnimationNodeOneShot" id=23]
+mix_mode = 1
+fadein_time = 0.0
+fadeout_time = 0.0
+
+[sub_resource type="AnimationNodeTimeScale" id=6]
 
 [sub_resource type="AnimationNodeBlendTree" id=8]
-graph_offset = Vector2( -246.628, 22.1689 )
+graph_offset = Vector2( 136.408, -55.7588 )
 nodes/Animation/node = SubResource( 5 )
-nodes/Animation/position = Vector2( -200, 180 )
+nodes/Animation/position = Vector2( -40, 240 )
 "nodes/Animation 2/node" = SubResource( 9 )
-"nodes/Animation 2/position" = Vector2( -40, 40 )
+"nodes/Animation 2/position" = Vector2( 100, 80 )
+"nodes/Animation 3/node" = SubResource( 22 )
+"nodes/Animation 3/position" = Vector2( 380, 240 )
 nodes/FallSpeed/node = SubResource( 14 )
-nodes/FallSpeed/position = Vector2( -120, 360 )
+nodes/FallSpeed/position = Vector2( 580, -100 )
+nodes/Grounded/node = SubResource( 24 )
+nodes/Grounded/position = Vector2( 800, 0 )
+nodes/GroundedState/node = SubResource( 25 )
+nodes/GroundedState/position = Vector2( 360, 80 )
+nodes/Land/node = SubResource( 23 )
+nodes/Land/position = Vector2( 580, 100 )
 nodes/RunSpeed/node = SubResource( 6 )
-nodes/RunSpeed/position = Vector2( -40, 180 )
-nodes/State/node = SubResource( 7 )
-nodes/State/position = Vector2( 220, 200 )
-nodes/output/position = Vector2( 620, 140 )
-node_connections = [ "State", 0, "Animation 2", "State", 1, "RunSpeed", "State", 2, "FallSpeed", "RunSpeed", 0, "Animation", "output", 0, "State" ]
+nodes/RunSpeed/position = Vector2( 120, 240 )
+nodes/output/position = Vector2( 1000, 0 )
+node_connections = [ "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed", "Land", 0, "GroundedState", "Land", 1, "Animation 3", "RunSpeed", 0, "Animation", "output", 0, "Grounded" ]
 
 [sub_resource type="Gradient" id=17]
 offsets = PoolRealArray( 0, 0.678715, 0.88755, 1 )
@@ -337,6 +372,19 @@ color_ramp = SubResource( 18 )
 anim_offset = 0.9
 anim_offset_random = 0.66
 
+[sub_resource type="ParticlesMaterial" id=20]
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 80.27
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 20.27
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 55.41
+color_ramp = SubResource( 18 )
+anim_offset = 0.9
+anim_offset_random = 0.66
+
 [node name="Player" type="KinematicBody2D"]
 z_index = 1
 script = ExtResource( 1 )
@@ -351,13 +399,16 @@ groundedDamping = 0.475
 airDamping = 0.248
 _anim = NodePath("AnimationTree")
 _jumpParticles = NodePath("JumpParticles")
+_landParticles = NodePath("LandParticles")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.5, 0.5 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, 8 )
 texture = ExtResource( 3 )
+offset = Vector2( 0, -8 )
 hframes = 3
 vframes = 2
 frame = 1
@@ -371,6 +422,7 @@ editor_draw_drag_margin = true
 anims/Fall = SubResource( 10 )
 anims/Idle = SubResource( 2 )
 anims/Jump = SubResource( 11 )
+anims/Land = SubResource( 21 )
 anims/RESET = SubResource( 3 )
 anims/Run = SubResource( 4 )
 
@@ -378,9 +430,11 @@ anims/Run = SubResource( 4 )
 tree_root = SubResource( 8 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/FallSpeed/blend_position = 1.08804
+parameters/FallSpeed/blend_position = 1.575
+parameters/Grounded/current = 1
+parameters/GroundedState/current = 0
+parameters/Land/active = false
 parameters/RunSpeed/scale = 1.0
-parameters/State/current = 2
 
 [node name="Timer" type="Timer" parent="."]
 
@@ -416,14 +470,14 @@ texture = ExtResource( 2 )
 [node name="LandParticles" type="Particles2D" parent="."]
 show_behind_parent = true
 material = ExtResource( 4 )
-position = Vector2( 0, 6 )
+position = Vector2( 0, 8 )
 emitting = false
-amount = 3
+amount = 5
 lifetime = 0.62
 one_shot = true
 explosiveness = 1.0
 randomness = 0.56
 fixed_fps = 24
 local_coords = false
-process_material = SubResource( 19 )
+process_material = SubResource( 20 )
 texture = ExtResource( 2 )

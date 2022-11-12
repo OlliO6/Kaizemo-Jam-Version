@@ -5,12 +5,13 @@ using BetterInspector;
 using Godot;
 using Shaking;
 
+[Additions.Debugging.DefaultColor(nameof(Colors.LightBlue), nameof(Colors.AliceBlue))]
 public partial class Player : KinematicBody2D
 {
-    const float JumpLenienceTime = 0.1f;
+    const float JumpLenienceTime = 0.3f;
 
     [NodeRef] public AnimationTree anim;
-    [NodeRef] public Particles2D jumpParticles;
+    [NodeRef] public Particles2D jumpParticles, landParticles;
 
     [Export, StartFoldout("Movement")] public float jumpVelocity;
     [Export] public float gravity, jumpingGravity, maxFallingSpeed;
@@ -32,7 +33,7 @@ public partial class Player : KinematicBody2D
     partial void OnReady()
     {
         Debug.AddWatcher(this, nameof(velocity));
-        Debug.AddWatcher(this, nameof(isJumping));
+        Debug.AddWatcher(this, nameof(isGrounded));
 
         AddChild(groundRememberTimer);
     }
@@ -56,7 +57,14 @@ public partial class Player : KinematicBody2D
         Animate(horizontalInput);
 
         velocity = MoveAndSlide(velocity, Vector2.Up, maxSlides: isJumping ? 1 : 4);
-        isGrounded = IsOnFloor();
+
+        if (IsOnFloor() != isGrounded)
+        {
+            isGrounded = IsOnFloor();
+
+            if (isGrounded) Land();
+            else LeaveGround();
+        }
 
         void HandleHorizontalMovement()
         {
@@ -90,7 +98,7 @@ public partial class Player : KinematicBody2D
 
         void HandleVerticalMovement()
         {
-            if (InputManager.IsJumpBuffered && groundRememberTimer.TimeLeft != 0)
+            if (InputManager.IsJumpBuffered && (isGrounded || groundRememberTimer.TimeLeft != 0))
             {
                 Jump();
                 return;
@@ -98,7 +106,6 @@ public partial class Player : KinematicBody2D
 
             if (isGrounded)
             {
-                groundRememberTimer.Start();
                 velocity.y = 1;
                 isJumping = false;
                 return;
@@ -112,24 +119,37 @@ public partial class Player : KinematicBody2D
         }
     }
 
+    private void LeaveGround()
+    {
+        groundRememberTimer.Start();
+        anim.SetParam("Land/active", false);
+    }
+
+    private void Land()
+    {
+        landParticles.Restart();
+        anim.SetParam("Land/active", true);
+    }
+
     private void Animate(float horizontalInput)
     {
-        Debug.LogPFrame(this, $"Is grounded: {isGrounded}");
         if (!isGrounded)
         {
-            anim.SetParam("State/current", (int)AnimationState.InAir);
+            anim.SetParam("Grounded/current", 0);
             anim.SetParam("FallSpeed/blend_position", velocity.y);
             return;
         }
 
+        anim.SetParam("Grounded/current", 1);
+
         if (horizontalInput != 0)
         {
-            anim.SetParam("State/current", (int)AnimationState.Run);
+            anim.SetParam("GroundedState/current", (int)GroundedAnimationState.Run);
             anim.SetParam("RunSpeed/scale", horizontalInput.Abs());
             return;
         }
 
-        anim.SetParam("State/current", (int)AnimationState.Idle);
+        anim.SetParam("GroundedState/current", (int)GroundedAnimationState.Idle);
     }
 
     private void Jump()
@@ -154,10 +174,9 @@ public partial class Player : KinematicBody2D
     }
 
 
-    private enum AnimationState
+    private enum GroundedAnimationState
     {
         Idle,
-        Run,
-        InAir
+        Run
     }
 }
