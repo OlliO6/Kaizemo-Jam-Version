@@ -195,7 +195,7 @@ public partial class Player : KinematicBody2D, IDiveGainer
 
         InputManager.UseJumpBuffer();
 
-        if (!InputManager.IsJumpHeld)
+        if (!InputManager.IsHoldingJump)
             CancelJump();
 
         jumpParticles.Restart();
@@ -270,6 +270,11 @@ public partial class Player : KinematicBody2D, IDiveGainer
 
         heldItem = item;
         item.IsPicked = true;
+
+        if (item.CanExtendAirTime && !isGrounded && InputManager.IsHoldingJump)
+        {
+            Jump();
+        }
     }
 
     public enum ActionDirection

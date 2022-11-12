@@ -15,7 +15,7 @@ public class InputManager : Node
     public static event Action<Player.ActionDirection> DiveInput;
 
     public static bool IsJumpBuffered => Instance.jumpTimer.TimeLeft != 0 && !Instance.jumpTimer.IsStopped();
-    public static bool IsJumpHeld => Input.IsActionPressed("Jump");
+    public static bool IsHoldingJump => Input.IsActionPressed("Jump");
 
     private Timer jumpTimer = new()
     {

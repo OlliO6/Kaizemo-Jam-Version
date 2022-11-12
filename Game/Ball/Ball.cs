@@ -10,7 +10,7 @@ public partial class Ball : RigidBody2D, IDiveGainer, IHoldAndThrowable
     [NodeRef] public CollisionPolygon2D collider;
 
     [Export] public Vector2 HoldOffset { get; set; }
-    [Export, StartFoldout("Thowing")] private Vector2 horizontalThrowVelocity;
+    [Export, StartFoldout("Throwing")] private Vector2 horizontalThrowVelocity;
     [Export] private Vector2 upwardsThrowVelocity;
     [Export, EndFoldout] private Vector2 downwardsThrowVelocity;
 
