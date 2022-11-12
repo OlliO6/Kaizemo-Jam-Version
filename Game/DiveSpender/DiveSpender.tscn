@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Materials/Shaders/Outline.gdshader" type="Shader" id=1]
+[ext_resource path="res://Game/DiveSpender/DiveSpender.cs" type="Script" id=2]
 
 [sub_resource type="ParticlesMaterial" id=2]
 emission_shape = 1
@@ -22,9 +23,14 @@ shader_param/width = 1.0
 shader_param/outline_color = Color( 0.47451, 0.235294, 0.654902, 1 )
 
 [sub_resource type="ViewportTexture" id=1]
-viewport_path = NodePath("Thing/Viewport")
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 5.0
 
 [node name="DiveSpender" type="Area2D"]
+script = ExtResource( 2 )
+_sprite = NodePath("ViewportSprite")
 
 [node name="Viewport" type="Viewport" parent="."]
 size = Vector2( 50, 50 )
@@ -44,5 +50,7 @@ process_material = SubResource( 2 )
 [node name="ViewportSprite" type="Sprite" parent="."]
 self_modulate = Color( 3, 3, 3, 1 )
 material = SubResource( 3 )
-position = Vector2( 57, 23 )
 texture = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 4 )

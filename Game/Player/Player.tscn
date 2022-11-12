@@ -1,12 +1,19 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Game/Player/Player.cs" type="Script" id=1]
 [ext_resource path="res://Particles/DustParticle.png" type="Texture" id=2]
 [ext_resource path="res://Game/Player/Player.png" type="Texture" id=3]
 [ext_resource path="res://Particles/DustMat.tres" type="Material" id=4]
+[ext_resource path="res://Materials/Shaders/ColorReplace.tres" type="Shader" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3.5, 7.5 )
+
+[sub_resource type="ShaderMaterial" id=26]
+shader = ExtResource( 5 )
+shader_param/toReplace = null
+shader_param/newColor = Color( 1.13, 0.58, 1.98, 1 )
+shader_param/apply = false
 
 [sub_resource type="Animation" id=10]
 resource_name = "Fall"
@@ -334,7 +341,7 @@ nodes/Land/position = Vector2( 580, 100 )
 nodes/RunSpeed/node = SubResource( 6 )
 nodes/RunSpeed/position = Vector2( 120, 240 )
 nodes/output/position = Vector2( 1000, 0 )
-node_connections = [ "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed", "Land", 0, "GroundedState", "Land", 1, "Animation 3", "RunSpeed", 0, "Animation", "output", 0, "Grounded" ]
+node_connections = [ "Land", 0, "GroundedState", "Land", 1, "Animation 3", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed", "RunSpeed", 0, "Animation", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "output", 0, "Grounded" ]
 
 [sub_resource type="Gradient" id=17]
 offsets = PoolRealArray( 0, 0.678715, 0.88755, 1 )
@@ -397,6 +404,7 @@ groundedAcceleration = 452.975
 airAcceleration = 286.134
 groundedDamping = 0.475
 airDamping = 0.248
+_sprite = NodePath("Sprite")
 _anim = NodePath("AnimationTree")
 _jumpParticles = NodePath("JumpParticles")
 _landParticles = NodePath("LandParticles")
@@ -406,17 +414,21 @@ position = Vector2( 0.5, 0.5 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 26 )
 position = Vector2( 0, 8 )
 texture = ExtResource( 3 )
 offset = Vector2( 0, -8 )
 hframes = 3
 vframes = 2
 frame = 1
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 smoothing_enabled = true
-editor_draw_drag_margin = true
+editor_draw_screen = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Fall = SubResource( 10 )

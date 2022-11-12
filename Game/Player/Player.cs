@@ -8,8 +8,9 @@ using Shaking;
 [Additions.Debugging.DefaultColor(nameof(Colors.LightBlue), nameof(Colors.AliceBlue))]
 public partial class Player : KinematicBody2D
 {
-    const float JumpLenienceTime = 0.3f;
+    const float JumpLenienceTime = 0.1f;
 
+    [NodeRef] public Sprite sprite;
     [NodeRef] public AnimationTree anim;
     [NodeRef] public Particles2D jumpParticles, landParticles;
 
@@ -20,15 +21,26 @@ public partial class Player : KinematicBody2D
     [Export(PropertyHint.Range, "0,1")] public float groundedDamping;
     [Export(PropertyHint.Range, "0,1"), EndFoldout] public float airDamping;
 
-
     public Vector2 velocity;
-    private bool isJumping, isGrounded;
+    private bool isJumping, isGrounded, _canDive;
 
     private Timer groundRememberTimer = new()
     {
         OneShot = true,
         WaitTime = JumpLenienceTime
     };
+
+    public bool CanDive
+    {
+        get => _canDive;
+        set
+        {
+            if (value == _canDive) return;
+            _canDive = value;
+
+            sprite.Material.Set("shader_param/apply", value);
+        }
+    }
 
     partial void OnReady()
     {
@@ -127,6 +139,7 @@ public partial class Player : KinematicBody2D
 
     private void Land()
     {
+        CanDive = false;
         landParticles.Restart();
         anim.SetParam("Land/active", true);
     }

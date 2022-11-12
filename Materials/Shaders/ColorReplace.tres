@@ -1,0 +1,20 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+
+uniform vec4 toReplace : hint_color;
+uniform vec4 newColor : hint_color;
+uniform bool apply;
+
+void fragment()
+{
+	vec4 color = texture(TEXTURE, UV);
+	
+	if (color == toReplace && apply)
+	{
+		color = newColor;
+	}
+	
+	COLOR = color;
+}"
