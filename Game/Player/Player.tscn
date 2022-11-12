@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Game/Player/Player.cs" type="Script" id=1]
 [ext_resource path="res://Particles/DustParticle.png" type="Texture" id=2]
@@ -341,7 +341,7 @@ nodes/Land/position = Vector2( 580, 100 )
 nodes/RunSpeed/node = SubResource( 6 )
 nodes/RunSpeed/position = Vector2( 120, 240 )
 nodes/output/position = Vector2( 1000, 0 )
-node_connections = [ "Land", 0, "GroundedState", "Land", 1, "Animation 3", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed", "RunSpeed", 0, "Animation", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "output", 0, "Grounded" ]
+node_connections = [ "output", 0, "Grounded", "Land", 0, "GroundedState", "Land", 1, "Animation 3", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "RunSpeed", 0, "Animation", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed" ]
 
 [sub_resource type="Gradient" id=17]
 offsets = PoolRealArray( 0, 0.678715, 0.88755, 1 )
@@ -362,6 +362,7 @@ initial_velocity_random = 0.26
 orbit_velocity = 0.0
 orbit_velocity_random = 1.0
 damping = 50.0
+color = Color( 0.34902, 0.541176, 0.498039, 1 )
 color_ramp = SubResource( 18 )
 anim_offset = 1.0
 anim_offset_random = 0.43
@@ -375,6 +376,7 @@ initial_velocity = 20.27
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 damping = 55.41
+color = Color( 0.34902, 0.541176, 0.498039, 1 )
 color_ramp = SubResource( 18 )
 anim_offset = 0.9
 anim_offset_random = 0.66
@@ -388,26 +390,44 @@ initial_velocity = 20.27
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 damping = 55.41
+color = Color( 0.34902, 0.541176, 0.498039, 1 )
 color_ramp = SubResource( 18 )
 anim_offset = 0.9
 anim_offset_random = 0.66
 
+[sub_resource type="ParticlesMaterial" id=27]
+emission_shape = 2
+emission_box_extents = Vector3( 2.154, 5.513, 1 )
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+radial_accel = 8.76
+radial_accel_random = 1.0
+color = Color( 1.68, 0.86, 1.88, 1 )
+color_ramp = SubResource( 18 )
+anim_offset = 0.73
+anim_offset_random = 0.46
+
 [node name="Player" type="KinematicBody2D"]
 z_index = 1
 script = ExtResource( 1 )
-jumpVelocity = -120.0
+jumpVelocity = -116.0
 gravity = 235.0
 jumpingGravity = 200.0
 maxFallingSpeed = 164.513
 jumpCancelStrenght = 0.31
-groundedAcceleration = 452.975
-airAcceleration = 286.134
-groundedDamping = 0.475
-airDamping = 0.248
+groundedAcceleration = 490.418
+airAcceleration = 278.899
+groundedDamping = 0.477
+airDamping = 0.216
+diveUpVelocity = Vector2( 40, -150 )
+diveHorizontalVelocity = Vector2( 175, -35 )
 _sprite = NodePath("Sprite")
 _anim = NodePath("AnimationTree")
 _jumpParticles = NodePath("JumpParticles")
 _landParticles = NodePath("LandParticles")
+_diveParticles = NodePath("DiveParticles")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.5, 0.5 )
@@ -492,4 +512,15 @@ randomness = 0.56
 fixed_fps = 24
 local_coords = false
 process_material = SubResource( 20 )
+texture = ExtResource( 2 )
+
+[node name="DiveParticles" type="Particles2D" parent="."]
+material = ExtResource( 4 )
+emitting = false
+amount = 20
+lifetime = 0.23
+one_shot = true
+fixed_fps = 24
+local_coords = false
+process_material = SubResource( 27 )
 texture = ExtResource( 2 )

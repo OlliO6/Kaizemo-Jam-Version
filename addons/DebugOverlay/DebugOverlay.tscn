@@ -98,7 +98,7 @@ pause_mode = 2
 layer = 100
 script = ExtResource( 3 )
 IsShowingFps = true
-turnOffCommonLogs = true
+turnOffCommonLogs = false
 removeNameUniqeness = true
 _Labels = NodePath("MarginContainer/HBoxContainer/DebugLabels")
 _Logs = NodePath("MarginContainer/MarginContainer/Logs")
@@ -133,8 +133,8 @@ custom_constants/separation = 0
 [node name="FPSLabel" type="Label" parent="MarginContainer/HBoxContainer/DebugLabels"]
 margin_top = -1.0
 margin_right = 380.0
-margin_bottom = 3.08801
-text = "FPS: 824"
+margin_bottom = 3.26667
+text = "FPS: 99"
 align = 1
 script = ExtResource( 4 )
 
@@ -165,15 +165,15 @@ anchor_bottom = 1.0
 margin_right = 640.0
 margin_bottom = 360.0
 rect_min_size = Vector2( 1024, 576 )
-rect_scale = Vector2( 0.25, 0.25 )
+rect_scale = Vector2( 0.35, 0.35 )
 theme = ExtResource( 8 )
 script = ExtResource( 5 )
 _ExitButton = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/ExitButton")
 _PrintCommonLogsToggle = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer/PrintCommonToggle")
 _NoUniqueNamesToggle = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer/NoUniqueNamesToggle")
 _ShowFpsToggle = NodePath("MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer/ShowFpsToggle")
-screenshotDir = "C:\\Users\\olive\\Pictures\\Screenshots/ZombieSlayer"
-dateInScreenShot = true
+screenshotDir = "C:/Users/olive/GodotProjects/RocketBeansGame/Screenshots"
+dateInScreenShot = false
 
 [node name="ColorRect" type="ColorRect" parent="DebugMenu"]
 anchor_right = 1.0
@@ -198,33 +198,33 @@ custom_constants/separation = 16
 
 [node name="HBoxContainer" type="HBoxContainer" parent="DebugMenu/MarginContainer/VBoxContainer"]
 margin_right = 992.0
-margin_bottom = 95.0
+margin_bottom = 37.0
 
 [node name="AudioServerControl" type="VBoxContainer" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_right = 725.0
-margin_bottom = 95.0
+margin_right = 711.0
+margin_bottom = 37.0
 size_flags_horizontal = 3
 script = ExtResource( 9 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 729.0
-margin_right = 867.0
+margin_left = 715.0
+margin_right = 860.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 0, 32 )
 size_flags_vertical = 0
 custom_constants/separation = 0
 
 [node name="PhysicFrameButton" type="Button" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
-margin_left = -0.800011
-margin_right = 104.0
+margin_left = -0.931854
+margin_right = 107.0
 margin_bottom = 32.0
 hint_tooltip = "Continue one physics frame."
 size_flags_horizontal = 8
 text = "Physic Step"
 
 [node name="10xPhysicsButton" type="Button" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer2"]
-margin_left = 104.0
-margin_right = 138.4
+margin_left = 107.0
+margin_right = 145.163
 margin_bottom = 32.0
 hint_tooltip = "Continue one frame."
 size_flags_horizontal = 2
@@ -233,7 +233,7 @@ action_mode = 0
 text = "10x"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 871.0
+margin_left = 864.0
 margin_right = 992.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 0, 32 )
@@ -241,8 +241,8 @@ size_flags_vertical = 0
 custom_constants/separation = 0
 
 [node name="OneFrameButton" type="Button" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
-margin_left = -0.200005
-margin_right = 87.0
+margin_left = -0.4897
+margin_right = 90.0
 margin_bottom = 32.0
 hint_tooltip = "Continue one frame."
 size_flags_horizontal = 10
@@ -251,8 +251,8 @@ action_mode = 0
 text = "Idle Step"
 
 [node name="10xIdleButton" type="Button" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
-margin_left = 87.0
-margin_right = 121.4
+margin_left = 90.0
+margin_right = 128.163
 margin_bottom = 32.0
 hint_tooltip = "Continue one frame."
 size_flags_horizontal = 2
@@ -261,18 +261,18 @@ action_mode = 0
 text = "10x"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="DebugMenu/MarginContainer/VBoxContainer"]
-margin_top = 111.0
+margin_top = 53.0
 margin_right = 992.0
 margin_bottom = 544.0
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer2"]
-margin_right = 193.0
-margin_bottom = 433.0
+margin_right = 210.0
+margin_bottom = 491.0
 size_flags_vertical = 3
 
 [node name="ExitButton" type="Button" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
-margin_right = 193.0
+margin_right = 210.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 0, 50 )
 custom_fonts/font = ExtResource( 6 )
@@ -281,7 +281,7 @@ text = "Exit Overlay"
 
 [node name="PrintStrayButton" type="Button" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
 margin_top = 54.0
-margin_right = 193.867
+margin_right = 210.0
 margin_bottom = 104.0
 rect_min_size = Vector2( 0, 50 )
 custom_fonts/font = ExtResource( 6 )
@@ -290,54 +290,55 @@ text = "Print Stray Nodes"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
 margin_top = 235.0
-margin_right = 193.0
-margin_bottom = 306.0
+margin_right = 210.0
+margin_bottom = 363.0
 size_flags_vertical = 6
 
 [node name="ShowFpsToggle" type="CheckButton" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer"]
-margin_right = 193.0
-margin_bottom = 21.1333
+margin_right = 210.0
+margin_bottom = 40.0
 pressed = true
 text = "Show fps"
 
 [node name="PrintCommonToggle" type="CheckButton" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer"]
-margin_top = 25.0
-margin_right = 193.0
-margin_bottom = 46.1333
+margin_top = 44.0
+margin_right = 210.0
+margin_bottom = 84.0
+pressed = true
 text = "Common logs"
 
 [node name="NoUniqueNamesToggle" type="CheckButton" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/VBoxContainer"]
-margin_top = 50.0
-margin_right = 193.0
-margin_bottom = 71.1333
+margin_top = 88.0
+margin_right = 210.816
+margin_bottom = 128.0
 hint_tooltip = "If on the names of the Objects logging and watched will be made ununique."
 pressed = true
 text = "No unique names"
 
 [node name="VSeparator" type="VSeparator" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer2"]
-margin_left = 197.0
-margin_right = 201.0
-margin_bottom = 433.0
+margin_left = 214.0
+margin_right = 218.0
+margin_bottom = 491.0
 
 [node name="MarginContainer" type="MarginContainer" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer2"]
-margin_left = 205.0
+margin_left = 222.0
 margin_right = 992.0
-margin_bottom = 433.0
+margin_bottom = 491.0
 size_flags_horizontal = 3
 custom_constants/margin_right = 8
 custom_constants/margin_left = 8
 
 [node name="HBoxContainer" type="HBoxContainer" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer"]
 margin_left = 8.0
-margin_top = 166.0
-margin_right = 779.0
-margin_bottom = 266.0
+margin_top = 195.0
+margin_right = 762.0
+margin_bottom = 295.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_vertical = 6
 custom_constants/separation = 12
 
 [node name="ConsolButton" type="Button" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/HBoxContainer"]
-margin_right = 220.0
+margin_right = 215.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 0, 50 )
 size_flags_horizontal = 3
@@ -346,22 +347,22 @@ custom_fonts/font = ExtResource( 6 )
 text = "Console"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/HBoxContainer"]
-margin_left = 232.0
-margin_right = 565.0
+margin_left = 227.0
+margin_right = 552.0
 margin_bottom = 100.0
 size_flags_horizontal = 3
 custom_constants/separation = 0
 
 [node name="ScreenshotButton" type="Button" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer"]
-margin_right = 249.0
+margin_right = 237.0
 margin_bottom = 100.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 6 )
 text = "Screenshot"
 
 [node name="ScreenshotIUButton" type="Button" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer"]
-margin_left = 249.0
-margin_right = 333.533
+margin_left = 237.0
+margin_right = 325.309
 margin_bottom = 100.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.29
@@ -369,23 +370,23 @@ custom_fonts/font = ExtResource( 6 )
 text = "With UI"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/HBoxContainer"]
-margin_left = 577.0
-margin_right = 771.0
+margin_left = 564.0
+margin_right = 754.0
 margin_bottom = 100.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.58
 custom_constants/separation = 0
 
 [node name="QuitButton" type="Button" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer2"]
-margin_right = 120.0
+margin_right = 118.0
 margin_bottom = 100.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 6 )
 text = "Quit Game"
 
 [node name="CrashButton" type="Button" parent="DebugMenu/MarginContainer/VBoxContainer/HBoxContainer2/MarginContainer/HBoxContainer/HBoxContainer2"]
-margin_left = 120.0
-margin_right = 194.0
+margin_left = 118.0
+margin_right = 190.0
 margin_bottom = 100.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.61
@@ -399,7 +400,7 @@ anchor_bottom = 1.0
 margin_right = 544.0
 margin_bottom = 231.0
 rect_min_size = Vector2( 1024, 576 )
-rect_scale = Vector2( 0.25, 0.25 )
+rect_scale = Vector2( 0.35, 0.35 )
 theme = ExtResource( 8 )
 custom_constants/margin_right = 150
 custom_constants/margin_top = 50
@@ -440,50 +441,50 @@ margin_bottom = 466.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Console/MarginContainer/VBoxContainer"]
 margin_right = 704.0
-margin_bottom = 21.0
+margin_bottom = 23.0
 
 [node name="BackButton" type="Button" parent="Console/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_right = 43.2
-margin_bottom = 21.1333
+margin_right = 46.8843
+margin_bottom = 23.0795
 text = "Back"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Console/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 245.0
-margin_right = 449.0
-margin_bottom = 21.0
+margin_left = 242.0
+margin_right = 452.0
+margin_bottom = 23.0
 size_flags_horizontal = 6
 
 [node name="HideCommonButton" type="Button" parent="Console/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
-margin_left = -0.600014
-margin_right = 113.0
-margin_bottom = 21.1333
+margin_left = -0.652931
+margin_right = 116.0
+margin_bottom = 23.0795
 size_flags_horizontal = 10
 toggle_mode = true
 text = "Hide Common "
 
 [node name="HideTimeButton" type="Button" parent="Console/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
-margin_left = 116.0
-margin_right = 203.2
-margin_bottom = 21.1333
+margin_left = 119.0
+margin_right = 209.49
+margin_bottom = 23.0795
 size_flags_horizontal = 6
 toggle_mode = true
 text = "Hide Time"
 
 [node name="ClearButton" type="Button" parent="Console/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 652.0
+margin_left = 648.395
 margin_right = 704.0
-margin_bottom = 21.1333
+margin_bottom = 23.0795
 size_flags_horizontal = 10
 size_flags_stretch_ratio = 0.0
 text = "Clear"
 
 [node name="HSeparator2" type="HSeparator" parent="Console/MarginContainer/VBoxContainer"]
-margin_top = 25.0
+margin_top = 27.0
 margin_right = 704.0
-margin_bottom = 29.0
+margin_bottom = 31.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Console/MarginContainer/VBoxContainer"]
-margin_top = 33.0
+margin_top = 35.0
 margin_right = 704.0
 margin_bottom = 417.0
 focus_mode = 2
@@ -491,44 +492,6 @@ size_flags_vertical = 3
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 custom_colors/selection_color = Color( 0.529412, 0.596078, 0.647059, 1 )
 bbcode_enabled = true
-bbcode_text = "[tint r=1 g=1 b=1 a=0.5]ZombieSlayer <Debug Editor> started[/tint]
-[00:02] [tint r=1 g=0.41 b=0.71 a=1]SceneManager: Loaded Menu[/tint]
-[00:05] [tint r=1 g=0.41 b=0.71 a=1]SceneManager: Loaded Game[/tint]
-[00:05] [tint r=1 g=1 b=1 a=1]WeaponSwitcher: Switched weapon to [/tint]
-[00:05] [tint r=0.88 g=1 b=1 a=1]ExplanationsManager: Started MoveAndAttack[/tint]
-[00:05] [tint r=1 g=1 b=1 a=1]MoveAndAttack: Explanation Started[/tint]
-[00:05] [tint r=0.5 g=1 b=0.83 a=1]Level 0: Reached[/tint]
-[00:05] [tint r=0.88 g=1 b=1 a=1]EnemySpawner: False[/tint]
-[00:05] [tint r=1 g=1 b=1 a=1]EnemySpawner: Difficulty changed to Level0[/tint]
-[00:11] [tint r=0.5 g=1 b=0.83 a=1]Level 1: Reached[/tint]
-[00:11] [tint r=0.88 g=1 b=1 a=1]EnemySpawner: False[/tint]
-[00:11] [tint r=1 g=1 b=1 a=1]EnemySpawner: Difficulty changed to Level1[/tint]
-[00:11] [tint r=0.5 g=1 b=0.83 a=1]Level 2: Reached[/tint]
-[00:11] [tint r=0.88 g=1 b=1 a=1]EnemySpawner: True[/tint]
-[00:11] [tint r=1 g=1 b=1 a=1]EnemySpawner: Difficulty changed to Level1[/tint]
-[00:12] [tint r=0.5 g=1 b=0.83 a=1]Level 3: Reached[/tint]
-[00:12] [tint r=0.88 g=1 b=1 a=1]EnemySpawner: True[/tint]
-[00:12] [tint r=1 g=1 b=1 a=1]EnemySpawner: Difficulty changed to Level1[/tint]
-"
-text = "ZombieSlayer <Debug Editor> started
-[00:02] SceneManager: Loaded Menu
-[00:05] SceneManager: Loaded Game
-[00:05] WeaponSwitcher: Switched weapon to 
-[00:05] ExplanationsManager: Started MoveAndAttack
-[00:05] MoveAndAttack: Explanation Started
-[00:05] Level 0: Reached
-[00:05] EnemySpawner: False
-[00:05] EnemySpawner: Difficulty changed to Level0
-[00:11] Level 1: Reached
-[00:11] EnemySpawner: False
-[00:11] EnemySpawner: Difficulty changed to Level1
-[00:11] Level 2: Reached
-[00:11] EnemySpawner: True
-[00:11] EnemySpawner: Difficulty changed to Level1
-[00:12] Level 3: Reached
-[00:12] EnemySpawner: True
-[00:12] EnemySpawner: Difficulty changed to Level1
-"
 scroll_following = true
 selection_enabled = true
 override_selected_font_color = true
@@ -542,7 +505,7 @@ margin_bottom = 425.0
 [node name="LineEdit" type="LineEdit" parent="Console/MarginContainer/VBoxContainer"]
 margin_top = 429.0
 margin_right = 704.0
-margin_bottom = 456.133
+margin_bottom = 456.079
 size_flags_stretch_ratio = 0.19
 clear_button_enabled = true
 placeholder_text = "Command Line"

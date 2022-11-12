@@ -11,6 +11,7 @@ public class InputManager : Node
 
     public static event Action JumpPressed;
     public static event Action JumpReleased;
+    public static event Action<Player.DiveDirection> DiveInput;
 
     public static bool IsJumpBuffered => Instance.jumpTimer.TimeLeft != 0 && !Instance.jumpTimer.IsStopped();
     public static bool IsJumpHeld => Input.IsActionPressed("Jump");
@@ -51,6 +52,24 @@ public class InputManager : Node
                 return;
             }
             JumpReleased();
+            return;
+        }
+
+        if (@event.IsActionPressed("DiveUp"))
+        {
+            DiveInput(Player.DiveDirection.Up);
+            return;
+        }
+
+        if (@event.IsActionPressed("DiveLeft"))
+        {
+            DiveInput(Player.DiveDirection.Left);
+            return;
+        }
+
+        if (@event.IsActionPressed("DiveRight"))
+        {
+            DiveInput(Player.DiveDirection.Right);
             return;
         }
     }

@@ -12,14 +12,16 @@ public partial class Player : KinematicBody2D
 
     [NodeRef] public Sprite sprite;
     [NodeRef] public AnimationTree anim;
-    [NodeRef] public Particles2D jumpParticles, landParticles;
+    [NodeRef] public Particles2D jumpParticles, landParticles, diveParticles;
 
     [Export, StartFoldout("Movement")] public float jumpVelocity;
     [Export] public float gravity, jumpingGravity, maxFallingSpeed;
     [Export(PropertyHint.Range, "0,1")] public float jumpCancelStrenght;
     [Export] public float groundedAcceleration, airAcceleration;
     [Export(PropertyHint.Range, "0,1")] public float groundedDamping;
-    [Export(PropertyHint.Range, "0,1"), EndFoldout] public float airDamping;
+    [Export(PropertyHint.Range, "0,1")] public float airDamping;
+    [Export] public Vector2 diveUpVelocity;
+    [Export, EndFoldout] public Vector2 diveHorizontalVelocity;
 
     public Vector2 velocity;
     private bool isJumping, isGrounded, _canDive;
@@ -42,6 +44,23 @@ public partial class Player : KinematicBody2D
         }
     }
 
+    public bool FaceLeft
+    {
+        get => RotationDegrees is 180 or -180;
+        set
+        {
+            if (value)
+            {
+                Scale = new(1, -1);
+                RotationDegrees = 180;
+                return;
+            }
+
+            Scale = new(1, 1);
+            RotationDegrees = 0;
+        }
+    }
+
     partial void OnReady()
     {
         Debug.AddWatcher(this, nameof(velocity));
@@ -53,11 +72,13 @@ public partial class Player : KinematicBody2D
     public override void _EnterTree()
     {
         InputManager.JumpReleased += CancelJump;
+        InputManager.DiveInput += OnDiveInput;
     }
 
     public override void _ExitTree()
     {
         InputManager.JumpReleased -= CancelJump;
+        InputManager.DiveInput -= OnDiveInput;
     }
 
     public override void _PhysicsProcess(float delta)
@@ -68,7 +89,7 @@ public partial class Player : KinematicBody2D
         HandleVerticalMovement();
         Animate(horizontalInput);
 
-        velocity = MoveAndSlide(velocity, Vector2.Up, maxSlides: isJumping ? 1 : 4);
+        ApplyVelocity();
 
         if (IsOnFloor() != isGrounded)
         {
@@ -80,7 +101,8 @@ public partial class Player : KinematicBody2D
 
         void HandleHorizontalMovement()
         {
-            FlipDirection();
+            if (horizontalInput != 0)
+                FaceLeft = horizontalInput < 0;
 
             if (isGrounded)
             {
@@ -91,21 +113,6 @@ public partial class Player : KinematicBody2D
 
             velocity.x += InputManager.GetPlayerHorizontalInput() * airAcceleration * delta;
             velocity.x *= Mathf.Pow(1f - airDamping, delta * 10f);
-
-            void FlipDirection()
-            {
-                if (horizontalInput > 0)
-                {
-                    Scale = new(1, 1);
-                    RotationDegrees = 0;
-                    return;
-                }
-                if (horizontalInput < 0)
-                {
-                    Scale = new(1, -1);
-                    RotationDegrees = 180;
-                }
-            }
         }
 
         void HandleVerticalMovement()
@@ -128,6 +135,17 @@ public partial class Player : KinematicBody2D
             velocity.y += (isJumping ? jumpingGravity : gravity) * delta;
             if (velocity.y > maxFallingSpeed)
                 velocity.y = maxFallingSpeed;
+        }
+
+        void ApplyVelocity()
+        {
+            Debug.LogPFrame(this, isJumping);
+            if (isJumping)
+            {
+                velocity = MoveAndSlide(velocity, Vector2.Up, maxSlides: 1);
+                return;
+            }
+            velocity = MoveAndSlide(velocity, Vector2.Up);
         }
     }
 
@@ -186,6 +204,43 @@ public partial class Player : KinematicBody2D
         velocity.y *= 1f - jumpCancelStrenght;
     }
 
+    private void OnDiveInput(DiveDirection direction)
+    {
+        if (!CanDive) return;
+        CanDive = false;
+        Dive(direction);
+    }
+
+    private void Dive(DiveDirection direction)
+    {
+        isJumping = false;
+
+        switch (direction)
+        {
+            case DiveDirection.Up:
+                velocity = diveUpVelocity * new Vector2(InputManager.GetPlayerHorizontalInput(), 1);
+                break;
+
+            case DiveDirection.Left:
+                FaceLeft = true;
+                velocity = diveHorizontalVelocity * new Vector2(-1, 1);
+                break;
+
+            case DiveDirection.Right:
+                FaceLeft = false;
+                velocity = diveHorizontalVelocity;
+                break;
+        }
+
+        diveParticles.Restart();
+    }
+
+    public enum DiveDirection
+    {
+        Up,
+        Left,
+        Right
+    }
 
     private enum GroundedAnimationState
     {
