@@ -1,3 +1,4 @@
+#if TOOLS
 namespace Shaking;
 
 using System;
@@ -18,3 +19,5 @@ public class Plugin : EditorPlugin
         RemoveCustomType(nameof(Shaker));
     }
 }
+
+#endif

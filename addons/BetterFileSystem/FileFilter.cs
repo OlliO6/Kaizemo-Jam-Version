@@ -1,3 +1,4 @@
+#if TOOLS
 using Godot;
 
 namespace BetterFileSystem
@@ -11,3 +12,5 @@ namespace BetterFileSystem
         [Export] public FilterState whenToFilter;
     }
 }
+
+#endif

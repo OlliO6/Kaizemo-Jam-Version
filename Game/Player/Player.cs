@@ -75,15 +75,13 @@ public partial class Player : KinematicBody2D, IDiveGainer
     public override void _EnterTree()
     {
         InputManager.JumpReleased += CancelJump;
-        InputManager.DiveInput += OnDiveInput;
-        InputManager.ThrowInput += OnThrowInput;
+        InputManager.DirectionalActionPressed += OnActionInput;
     }
 
     public override void _ExitTree()
     {
         InputManager.JumpReleased -= CancelJump;
-        InputManager.DiveInput -= OnDiveInput;
-        InputManager.ThrowInput -= OnThrowInput;
+        InputManager.DirectionalActionPressed -= OnActionInput;
     }
 
     public override void _PhysicsProcess(float delta)
@@ -209,20 +207,20 @@ public partial class Player : KinematicBody2D, IDiveGainer
         velocity.y *= 1f - jumpCancelStrenght;
     }
 
-    private void OnDiveInput(ActionDirection direction)
-    {
-        if (!CanDive) return;
-        CanDive = false;
-        Dive(direction);
-    }
-
-    private void OnThrowInput(ActionDirection direction)
+    private void OnActionInput(ActionDirection direction)
     {
         if (heldItem == null)
+        {
+            Dive(direction);
             return;
+        }
 
+        CallDeferred(nameof(ThrowItem), direction);
+    }
+
+    private void ThrowItem(ActionDirection direction)
+    {
         heldItemRemote.RemotePath = "";
-
         heldItem.IsPicked = false;
         heldItem.Throw(direction);
         heldItem = null;
@@ -230,6 +228,9 @@ public partial class Player : KinematicBody2D, IDiveGainer
 
     private void Dive(ActionDirection direction)
     {
+        if (!CanDive) return;
+
+        CanDive = false;
         isJumping = false;
 
         switch (direction)

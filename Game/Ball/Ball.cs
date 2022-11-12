@@ -7,7 +7,7 @@ using Godot;
 public partial class Ball : RigidBody2D, IDiveGainer, IHoldAndThrowable
 {
     [NodeRef] public Area2D pickArea;
-    [NodeRef] public CollisionPolygon2D collider;
+    [NodeRef] public CollisionShape2D collider;
 
     [Export] public Vector2 HoldOffset { get; set; }
     [Export, StartFoldout("Throwing")] private Vector2 horizontalThrowVelocity;

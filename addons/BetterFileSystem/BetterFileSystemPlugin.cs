@@ -1,3 +1,4 @@
+#if TOOLS
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -575,3 +576,5 @@ namespace BetterFileSystem
         #endregion
     }
 }
+
+#endif

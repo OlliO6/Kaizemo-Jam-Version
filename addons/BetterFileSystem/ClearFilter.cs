@@ -1,6 +1,7 @@
-using Godot;
+#if TOOLS
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
 
 namespace BetterFileSystem
 {
@@ -49,3 +50,5 @@ namespace BetterFileSystem
         }
     }
 }
+
+#endif

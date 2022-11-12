@@ -11,8 +11,7 @@ public class InputManager : Node
 
     public static event Action JumpPressed;
     public static event Action JumpReleased;
-    public static event Action<Player.ActionDirection> ThrowInput;
-    public static event Action<Player.ActionDirection> DiveInput;
+    public static event Action<Player.ActionDirection> DirectionalActionPressed;
 
     public static bool IsJumpBuffered => Instance.jumpTimer.TimeLeft != 0 && !Instance.jumpTimer.IsStopped();
     public static bool IsHoldingJump => Input.IsActionPressed("Jump");
@@ -58,28 +57,35 @@ public class InputManager : Node
 
         if (@event.IsActionPressed("ActionUp"))
         {
-            (Input.IsActionPressed("Throw") ? ThrowInput : DiveInput)
-                    ?.Invoke(Player.ActionDirection.Up);
+            DirectionalActionPressed(Player.ActionDirection.Up);
             return;
         }
         if (@event.IsActionPressed("ActionDown"))
         {
-            (Input.IsActionPressed("Throw") ? ThrowInput : DiveInput)
-                    ?.Invoke(Player.ActionDirection.Down);
+            DirectionalActionPressed(Player.ActionDirection.Down);
             return;
         }
         if (@event.IsActionPressed("ActionLeft"))
         {
-            (Input.IsActionPressed("Throw") ? ThrowInput : DiveInput)
-                    ?.Invoke(Player.ActionDirection.Left);
+            DirectionalActionPressed(Player.ActionDirection.Left);
             return;
         }
         if (@event.IsActionPressed("ActionRight"))
         {
-            (Input.IsActionPressed("Throw") ? ThrowInput : DiveInput)
-                    ?.Invoke(Player.ActionDirection.Right);
+            DirectionalActionPressed(Player.ActionDirection.Right);
             return;
         }
+
+        if (@event is InputEventKey key && key.Pressed && key.Scancode == (uint)KeyList.F11)
+        {
+            ToggleFullscreen();
+            return;
+        }
+    }
+
+    private void ToggleFullscreen()
+    {
+        OS.WindowFullscreen = !OS.WindowFullscreen;
     }
 
     private void StartJumpBuffer()

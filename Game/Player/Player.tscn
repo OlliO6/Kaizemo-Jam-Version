@@ -1,10 +1,11 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Game/Player/Player.cs" type="Script" id=1]
 [ext_resource path="res://Particles/DustParticle.png" type="Texture" id=2]
 [ext_resource path="res://Game/Player/Player.png" type="Texture" id=3]
 [ext_resource path="res://Particles/DustMat.tres" type="Material" id=4]
 [ext_resource path="res://Materials/Shaders/ColorReplace.tres" type="Shader" id=5]
+[ext_resource path="res://Sounds/Jump.wav" type="AudioStream" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3.5, 7.5 )
@@ -122,7 +123,6 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id=11]
 resource_name = "Jump"
-loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:rotation_degrees")
 tracks/0/interp = 1
@@ -341,7 +341,7 @@ nodes/Land/position = Vector2( 580, 100 )
 nodes/RunSpeed/node = SubResource( 6 )
 nodes/RunSpeed/position = Vector2( 120, 240 )
 nodes/output/position = Vector2( 1000, 0 )
-node_connections = [ "Land", 0, "GroundedState", "Land", 1, "Animation 3", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "RunSpeed", 0, "Animation", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed", "output", 0, "Grounded" ]
+node_connections = [ "Land", 0, "GroundedState", "Land", 1, "Animation 3", "RunSpeed", 0, "Animation", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed", "output", 0, "Grounded" ]
 
 [sub_resource type="Gradient" id=17]
 offsets = PoolRealArray( 0, 0.678715, 0.88755, 1 )
@@ -408,6 +408,9 @@ color = Color( 1.68, 0.86, 1.88, 1 )
 color_ramp = SubResource( 18 )
 anim_offset = 0.73
 anim_offset_random = 0.46
+
+[sub_resource type="AudioStreamRandomPitch" id=28]
+audio_stream = ExtResource( 6 )
 
 [node name="Player" type="KinematicBody2D"]
 z_index = 1
@@ -532,3 +535,6 @@ position = Vector2( 1, -10 )
 [node name="HeldItemRemote" type="RemoteTransform2D" parent="HeldItemPosition"]
 update_rotation = false
 update_scale = false
+
+[node name="JumpPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource( 28 )

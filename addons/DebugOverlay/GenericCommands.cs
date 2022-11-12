@@ -1,3 +1,4 @@
+#if DEBUG
 namespace Additions.Debugging;
 
 using Godot;
@@ -85,3 +86,5 @@ public class GenericCommands : CommandCollection
         DebugOverlay.AddOutputLine($"The date will now be {(show ? "shown" : "hidden")} in screenshots", true);
     }
 }
+
+#endif

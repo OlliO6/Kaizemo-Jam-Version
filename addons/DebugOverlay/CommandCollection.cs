@@ -1,3 +1,4 @@
+#if DEBUG
 namespace Additions.Debugging;
 using Godot;
 
@@ -13,3 +14,5 @@ public abstract class CommandCollection : Object
     protected string ColorizeText(string text, Color color) => DebugOverlay.ColorizeText(text, color);
     protected void RefreshOutput() => console.RefreshOutput();
 }
+
+#endif

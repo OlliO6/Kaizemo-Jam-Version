@@ -1,3 +1,4 @@
+#if TOOLS
 using Godot;
 
 
@@ -14,3 +15,5 @@ namespace BetterFileSystem
         }
     }
 }
+
+#endif

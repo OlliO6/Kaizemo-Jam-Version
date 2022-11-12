@@ -46,6 +46,11 @@ _global_script_class_icons={
 
 config/name="RocketBeansGame"
 run/main_scene="res://Playground.tscn"
+config/icon="res://Game/Ball/Ball.png"
+
+[audio]
+
+default_bus_layout="res://AudiobusLayout.tres"
 
 [autoload]
 
@@ -56,10 +61,14 @@ InputManager="*res://Singletons/InputManager.cs"
 
 window/size/width=384
 window/size/height=216
-window/size/test_width=1080
-window/size/test_height=1920
+window/size/test_width=1229
+window/size/test_height=691
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
+
+[editor]
+
+scene_naming=1
 
 [editor_plugins]
 
@@ -145,4 +154,9 @@ ActionRight={
 [physics]
 
 common/enable_pause_aware_picking=true
+2d/thread_model=2
 2d/default_gravity=200
+
+[rendering]
+
+environment/default_clear_color=Color( 0.47451, 0.235294, 0.654902, 1 )
