@@ -6,13 +6,14 @@ using Godot;
 using Shaking;
 
 [Additions.Debugging.DefaultColor(nameof(Colors.LightBlue), nameof(Colors.AliceBlue))]
-public partial class Player : KinematicBody2D
+public partial class Player : KinematicBody2D, IDiveGainer
 {
     const float JumpLenienceTime = 0.1f;
 
     [NodeRef] public Sprite sprite;
     [NodeRef] public AnimationTree anim;
     [NodeRef] public Particles2D jumpParticles, landParticles, diveParticles;
+    [NodeRef] public RemoteTransform2D heldItemRemote;
 
     [Export, StartFoldout("Movement")] public float jumpVelocity;
     [Export] public float gravity, jumpingGravity, maxFallingSpeed;
@@ -24,6 +25,7 @@ public partial class Player : KinematicBody2D
     [Export] public Vector2 diveUpVelocity;
     [Export, EndFoldout] public Vector2 diveHorizontalVelocity;
 
+    public IHoldAndThrowable heldItem;
     public Vector2 velocity;
     private bool isJumping, isGrounded, _canDive;
 
@@ -74,12 +76,14 @@ public partial class Player : KinematicBody2D
     {
         InputManager.JumpReleased += CancelJump;
         InputManager.DiveInput += OnDiveInput;
+        InputManager.ThrowInput += OnThrowInput;
     }
 
     public override void _ExitTree()
     {
         InputManager.JumpReleased -= CancelJump;
         InputManager.DiveInput -= OnDiveInput;
+        InputManager.ThrowInput -= OnThrowInput;
     }
 
     public override void _PhysicsProcess(float delta)
@@ -143,10 +147,10 @@ public partial class Player : KinematicBody2D
             Debug.LogPFrame(this, isJumping);
             if (isJumping)
             {
-                velocity = MoveAndSlide(velocity, Vector2.Up, maxSlides: 1);
+                velocity = MoveAndSlide(velocity, Vector2.Up, maxSlides: 1, infiniteInertia: false);
                 return;
             }
-            velocity = MoveAndSlide(velocity, Vector2.Up);
+            velocity = MoveAndSlide(velocity, Vector2.Up, infiniteInertia: false);
         }
     }
 
@@ -205,29 +209,45 @@ public partial class Player : KinematicBody2D
         velocity.y *= 1f - jumpCancelStrenght;
     }
 
-    private void OnDiveInput(DiveDirection direction)
+    private void OnDiveInput(ActionDirection direction)
     {
         if (!CanDive) return;
         CanDive = false;
         Dive(direction);
     }
 
-    private void Dive(DiveDirection direction)
+    private void OnThrowInput(ActionDirection direction)
+    {
+        if (heldItem == null)
+            return;
+
+        heldItemRemote.RemotePath = "";
+
+        heldItem.IsPicked = false;
+        heldItem.Throw(direction);
+        heldItem = null;
+    }
+
+    private void Dive(ActionDirection direction)
     {
         isJumping = false;
 
         switch (direction)
         {
-            case DiveDirection.Up:
+            case ActionDirection.Up:
                 velocity = diveUpVelocity * new Vector2(InputManager.GetPlayerHorizontalInput(), 1);
                 break;
 
-            case DiveDirection.Left:
+            case ActionDirection.Down:
+                velocity = diveUpVelocity * new Vector2(InputManager.GetPlayerHorizontalInput(), -1);
+                break;
+
+            case ActionDirection.Left:
                 FaceLeft = true;
                 velocity = diveHorizontalVelocity * new Vector2(-1, 1);
                 break;
 
-            case DiveDirection.Right:
+            case ActionDirection.Right:
                 FaceLeft = false;
                 velocity = diveHorizontalVelocity;
                 break;
@@ -236,9 +256,26 @@ public partial class Player : KinematicBody2D
         diveParticles.Restart();
     }
 
-    public enum DiveDirection
+    public void GainDive()
+    {
+        CanDive = true;
+    }
+
+    public void PickupUpThrowable(Node2D node)
+    {
+        if (node is not IHoldAndThrowable item) return;
+
+        heldItemRemote.Position = item.HoldOffset;
+        heldItemRemote.RemotePath = heldItemRemote.GetPathTo(node);
+
+        heldItem = item;
+        item.IsPicked = true;
+    }
+
+    public enum ActionDirection
     {
         Up,
+        Down,
         Left,
         Right
     }

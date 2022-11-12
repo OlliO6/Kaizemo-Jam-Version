@@ -20,10 +20,10 @@ public partial class DiveSpender : Area2D
 
     private void OnBodyEntered(Node node)
     {
-        if (node is not Player player)
+        if (node is not IDiveGainer diveGainer)
             return;
 
-        player.CanDive = true;
+        diveGainer.GainDive();
 
         Deactivate();
 

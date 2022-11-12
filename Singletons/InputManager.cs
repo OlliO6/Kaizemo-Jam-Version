@@ -11,7 +11,8 @@ public class InputManager : Node
 
     public static event Action JumpPressed;
     public static event Action JumpReleased;
-    public static event Action<Player.DiveDirection> DiveInput;
+    public static event Action<Player.ActionDirection> ThrowInput;
+    public static event Action<Player.ActionDirection> DiveInput;
 
     public static bool IsJumpBuffered => Instance.jumpTimer.TimeLeft != 0 && !Instance.jumpTimer.IsStopped();
     public static bool IsJumpHeld => Input.IsActionPressed("Jump");
@@ -55,25 +56,31 @@ public class InputManager : Node
             return;
         }
 
-        if (@event.IsActionPressed("DiveUp"))
+        if (@event.IsActionPressed("ActionUp"))
         {
-            DiveInput(Player.DiveDirection.Up);
+            (Input.IsActionPressed("Throw") ? ThrowInput : DiveInput)
+                    ?.Invoke(Player.ActionDirection.Up);
             return;
         }
-
-        if (@event.IsActionPressed("DiveLeft"))
+        if (@event.IsActionPressed("ActionDown"))
         {
-            DiveInput(Player.DiveDirection.Left);
+            (Input.IsActionPressed("Throw") ? ThrowInput : DiveInput)
+                    ?.Invoke(Player.ActionDirection.Down);
             return;
         }
-
-        if (@event.IsActionPressed("DiveRight"))
+        if (@event.IsActionPressed("ActionLeft"))
         {
-            DiveInput(Player.DiveDirection.Right);
+            (Input.IsActionPressed("Throw") ? ThrowInput : DiveInput)
+                    ?.Invoke(Player.ActionDirection.Left);
+            return;
+        }
+        if (@event.IsActionPressed("ActionRight"))
+        {
+            (Input.IsActionPressed("Throw") ? ThrowInput : DiveInput)
+                    ?.Invoke(Player.ActionDirection.Right);
             return;
         }
     }
-
 
     private void StartJumpBuffer()
     {

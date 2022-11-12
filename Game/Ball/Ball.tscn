@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Game/Ball/Ball.cs" type="Script" id=1]
+[ext_resource path="res://Game/Ball/Ball.png" type="Texture" id=2]
+
+[sub_resource type="PhysicsMaterial" id=2]
+friction = 0.5
+bounce = 0.3
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 7.0
+
+[node name="Ball" type="RigidBody2D"]
+collision_layer = 4
+mode = 2
+physics_material_override = SubResource( 2 )
+script = ExtResource( 1 )
+horizontalThrowVelocity = Vector2( 125, -50 )
+upwardsThrowVelocity = Vector2( 0, -150 )
+downwardsThrowVelocity = Vector2( 0, 100 )
+_pickArea = NodePath("Area2D")
+_collider = NodePath("CollisionPolygon2D")
+
+[node name="Ball" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -3, -4, 3, -4, 4, -3, 4, 3, 3, 4, -3, 4, -4, 3, -4, -3 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 4 )

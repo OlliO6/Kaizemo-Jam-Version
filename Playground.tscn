@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Game/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Tilesets/Tileset.tres" type="TileSet" id=2]
 [ext_resource path="res://Game/DiveSpender/DiveSpender.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Game/Ball/Ball.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Environment" id=4]
 background_mode = 4
@@ -32,6 +33,10 @@ environment = SubResource( 4 )
 position = Vector2( 55, 15 )
 deaciveTime = 3.0
 
+[node name="DiveSpender2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 138, -91 )
+deaciveTime = 3.0
+
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 visible = false
 position = Vector2( 15, 58 )
@@ -41,3 +46,6 @@ position = Vector2( 0, -4 )
 shape = SubResource( 5 )
 disabled = true
 one_way_collision = true
+
+[node name="Ball" parent="." instance=ExtResource( 4 )]
+position = Vector2( -34, -9 )

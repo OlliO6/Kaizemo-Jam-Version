@@ -134,7 +134,7 @@ custom_constants/separation = 0
 margin_top = -1.0
 margin_right = 380.0
 margin_bottom = 3.08801
-text = "FPS: 114"
+text = "FPS: 128"
 align = 1
 script = ExtResource( 4 )
 
@@ -444,36 +444,36 @@ margin_right = 704.0
 margin_bottom = 23.0
 
 [node name="BackButton" type="Button" parent="Console/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_right = 46.8843
-margin_bottom = 23.0795
+margin_right = 47.5556
+margin_bottom = 23.3556
 text = "Back"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Console/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 242.0
-margin_right = 452.0
+margin_left = 240.0
+margin_right = 454.0
 margin_bottom = 23.0
 size_flags_horizontal = 6
 
 [node name="HideCommonButton" type="Button" parent="Console/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
-margin_left = -0.652931
-margin_right = 116.0
-margin_bottom = 23.0795
+margin_left = -0.666656
+margin_right = 118.0
+margin_bottom = 23.3556
 size_flags_horizontal = 10
 toggle_mode = true
 text = "Hide Common "
 
 [node name="HideTimeButton" type="Button" parent="Console/MarginContainer/VBoxContainer/HBoxContainer/HBoxContainer"]
-margin_left = 119.0
-margin_right = 209.49
-margin_bottom = 23.0795
+margin_left = 122.0
+margin_right = 214.0
+margin_bottom = 23.3556
 size_flags_horizontal = 6
 toggle_mode = true
 text = "Hide Time"
 
 [node name="ClearButton" type="Button" parent="Console/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 648.395
+margin_left = 647.556
 margin_right = 704.0
-margin_bottom = 23.0795
+margin_bottom = 23.3556
 size_flags_horizontal = 10
 size_flags_stretch_ratio = 0.0
 text = "Clear"
@@ -492,6 +492,30 @@ size_flags_vertical = 3
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 custom_colors/selection_color = Color( 0.529412, 0.596078, 0.647059, 1 )
 bbcode_enabled = true
+bbcode_text = "[tint r=1 g=1 b=1 a=0.5]RocketBeansGame <Debug Editor> started[/tint]
+[00:02] [tint r=0.68 g=0.85 b=0.9 a=1]Player: Throwed Ball[/tint]
+[00:03] [tint r=0.68 g=0.85 b=0.9 a=1]Player: Throwed Ball[/tint]
+[00:04] [tint r=0.68 g=0.85 b=0.9 a=1]Player: Throwed Ball[/tint]
+[00:04] [tint r=0.68 g=0.85 b=0.9 a=1]Player: Throwed Ball[/tint]
+[00:05] [tint r=0.68 g=0.85 b=0.9 a=1]Player: Throwed Ball[/tint]
+[00:05] [tint r=0.68 g=0.85 b=0.9 a=1]Player: Throwed Ball[/tint]
+[00:05] [tint r=0.68 g=0.85 b=0.9 a=1]Player: Throwed Ball[/tint]
+[00:05] [tint r=0.68 g=0.85 b=0.9 a=1]Player: Throwed Ball[/tint]
+[00:07] [tint r=0.68 g=0.85 b=0.9 a=1]Player: Throwed Ball[/tint]
+[00:09] [tint r=0.68 g=0.85 b=0.9 a=1]Player: Throwed Ball[/tint]
+"
+text = "RocketBeansGame <Debug Editor> started
+[00:02] Player: Throwed Ball
+[00:03] Player: Throwed Ball
+[00:04] Player: Throwed Ball
+[00:04] Player: Throwed Ball
+[00:05] Player: Throwed Ball
+[00:05] Player: Throwed Ball
+[00:05] Player: Throwed Ball
+[00:05] Player: Throwed Ball
+[00:07] Player: Throwed Ball
+[00:09] Player: Throwed Ball
+"
 scroll_following = true
 selection_enabled = true
 override_selected_font_color = true
@@ -505,7 +529,7 @@ margin_bottom = 425.0
 [node name="LineEdit" type="LineEdit" parent="Console/MarginContainer/VBoxContainer"]
 margin_top = 429.0
 margin_right = 704.0
-margin_bottom = 456.079
+margin_bottom = 456.356
 size_flags_stretch_ratio = 0.19
 clear_button_enabled = true
 placeholder_text = "Command Line"

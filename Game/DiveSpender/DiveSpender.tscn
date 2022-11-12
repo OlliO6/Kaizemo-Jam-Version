@@ -29,6 +29,8 @@ viewport_path = NodePath("Viewport")
 radius = 5.0
 
 [node name="DiveSpender" type="Area2D"]
+collision_mask = 7
+monitorable = false
 script = ExtResource( 2 )
 deaciveTime = 5.0
 deaciveColor = Color( 0.658824, 0.658824, 0.658824, 0.392157 )
@@ -47,6 +49,7 @@ render_target_update_mode = 3
 [node name="Particles2D" type="Particles2D" parent="Viewport"]
 position = Vector2( 25, 25 )
 amount = 24
+preprocess = 1.0
 process_material = SubResource( 2 )
 
 [node name="ViewportSprite" type="Sprite" parent="."]
