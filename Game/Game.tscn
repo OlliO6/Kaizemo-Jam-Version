@@ -14,6 +14,7 @@ glow_blend_mode = 1
 glow_bicubic_upscale = true
 
 [node name="Game" type="Node"]
+pause_mode = 2
 script = ExtResource( 1 )
 levels = [ ExtResource( 2 ), ExtResource( 3 ) ]
 _musicPlayer = NodePath("MusicPlayer")

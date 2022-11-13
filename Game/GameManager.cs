@@ -25,10 +25,17 @@ public partial class GameManager : Node
 
     partial void OnReady()
     {
-        SwitchLevel();
+        SetLevel();
     }
 
-    private void SwitchLevel()
+    private async void SwitchLevel()
+    {
+        await SceneManager.StartTransition();
+        SetLevel();
+        SceneManager.EndTransition();
+    }
+
+    private void SetLevel()
     {
         if (currentLevel != null)
         {
@@ -38,6 +45,7 @@ public partial class GameManager : Node
 
         currentLevel = levels[CurrentLevelIdx].Instance<Level>();
         AddChild(currentLevel);
+        currentLevel.PauseMode = PauseModeEnum.Stop;
 
         musicPlayer.Stream = currentLevel.music;
         currentLevel.Finished += OnLevelFinished;

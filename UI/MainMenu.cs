@@ -28,9 +28,9 @@ public partial class MainMenu : CanvasLayer
         UISoundPlayer.RecognizeButtons(playButton, quitButton, playgroundButton);
     }
 
-    private object OnPlaygroundPressed() => GetTree().ChangeSceneTo(playgroundScene);
+    private void OnPlaygroundPressed() => SceneManager.LoadScene(playgroundScene);
 
-    private void OnPlayPressed() => GetTree().ChangeSceneTo(gameScene);
+    private void OnPlayPressed() => SceneManager.LoadScene(gameScene);
 
     private void OnQuitPressed() => GetTree().Quit();
 }

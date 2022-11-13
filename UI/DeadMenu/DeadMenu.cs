@@ -18,17 +18,9 @@ public partial class DeadMenu : PopupDialog
         UISoundPlayer.RecognizeButtons(restartButton, menuButton);
     }
 
-    private void OnMenuPressed()
-    {
-        GetTree().Paused = false;
-        GetTree().ChangeSceneTo(menuScene);
-    }
+    private void OnMenuPressed() => SceneManager.LoadMenu();
 
-    private void OnRestartPressed()
-    {
-        GetTree().Paused = false;
-        GetTree().ReloadCurrentScene();
-    }
+    private void OnRestartPressed() => SceneManager.ReloadCurrentScene();
 
     public void OnPlayerDied()
     {

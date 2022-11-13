@@ -29,17 +29,9 @@ public partial class PauseMenu : PopupDialog
         UISoundPlayer.RecognizeButtons(resumeButton, restartButton, menuButton);
     }
 
-    private void OnMenuPressed()
-    {
-        Resume();
-        GetTree().ChangeSceneTo(menuScene);
-    }
+    private void OnMenuPressed() => SceneManager.LoadMenu();
 
-    private void OnRestartPressed()
-    {
-        Resume();
-        GetTree().ReloadCurrentScene();
-    }
+    private void OnRestartPressed() => SceneManager.ReloadCurrentScene();
 
     private void TogglePaused()
     {
