@@ -9,8 +9,7 @@ public class InputManager : Node
 
     public static InputManager Instance { get; private set; }
 
-    public static event Action JumpPressed;
-    public static event Action JumpReleased;
+    public static event Action JumpPressed, JumpReleased, PausePressed;
     public static event Action<Player.ActionDirection> DirectionalActionPressed;
 
     public static bool IsJumpBuffered => Instance.jumpTimer.TimeLeft != 0 && !Instance.jumpTimer.IsStopped();
@@ -28,6 +27,7 @@ public class InputManager : Node
 
     public override void _Ready()
     {
+        PauseMode = PauseModeEnum.Process;
         JumpPressed += StartJumpBuffer;
         AddChild(jumpTimer);
     }
@@ -48,33 +48,40 @@ public class InputManager : Node
         {
             if (@event.IsPressed())
             {
-                JumpPressed();
+                JumpPressed?.Invoke();
                 return;
             }
-            JumpReleased();
+            JumpReleased?.Invoke();
             return;
         }
 
         if (@event.IsActionPressed("ActionUp"))
         {
-            DirectionalActionPressed(Player.ActionDirection.Up);
+            DirectionalActionPressed?.Invoke(Player.ActionDirection.Up);
             return;
         }
         if (@event.IsActionPressed("ActionDown"))
         {
-            DirectionalActionPressed(Player.ActionDirection.Down);
+            DirectionalActionPressed?.Invoke(Player.ActionDirection.Down);
             return;
         }
         if (@event.IsActionPressed("ActionLeft"))
         {
-            DirectionalActionPressed(Player.ActionDirection.Left);
+            DirectionalActionPressed?.Invoke(Player.ActionDirection.Left);
             return;
         }
         if (@event.IsActionPressed("ActionRight"))
         {
-            DirectionalActionPressed(Player.ActionDirection.Right);
+            DirectionalActionPressed?.Invoke(Player.ActionDirection.Right);
             return;
         }
+
+        if (@event.IsActionPressed("Pause"))
+        {
+            PausePressed?.Invoke();
+            return;
+        }
+
 
         if (@event is InputEventKey key && key.Pressed && key.Scancode == (uint)KeyList.F11)
         {

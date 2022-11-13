@@ -1,16 +1,16 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://UI/MainMenu.cs" type="Script" id=1]
 [ext_resource path="res://Tilesets/Tileset.tres" type="TileSet" id=2]
 [ext_resource path="res://UI/Theme/Font/SmallFont.tres" type="DynamicFont" id=3]
 [ext_resource path="res://UI/Theme/Font/OutlinedFont.tres" type="DynamicFont" id=4]
 [ext_resource path="res://UI/Theme/Theme.tres" type="Theme" id=5]
-[ext_resource path="res://Playground.tscn" type="PackedScene" id=6]
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource( 1 )
-gameScene = ExtResource( 6 )
-_playButton = NodePath("Control/CenterContainer/VBoxContainer/Play Button")
+gameScenePath = "res://Playground.tscn"
+_playButton = NodePath("Control/CenterContainer/VBoxContainer/PlayButton")
+_quitButton = NodePath("Control/CenterContainer/VBoxContainer/QuitButton")
 
 [node name="Control" type="Control" parent="."]
 anchor_right = 1.0
@@ -23,9 +23,9 @@ anchor_bottom = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CenterContainer"]
 margin_left = 156.0
-margin_top = 73.0
+margin_top = 58.0
 margin_right = 227.0
-margin_bottom = 143.0
+margin_bottom = 157.0
 
 [node name="Label" type="Label" parent="Control/CenterContainer/VBoxContainer"]
 modulate = Color( 0.560784, 0.760784, 0.639216, 1 )
@@ -41,19 +41,23 @@ margin_top = 25.0
 margin_right = 71.0
 margin_bottom = 29.0
 
-[node name="Play Button" type="Button" parent="Control/CenterContainer/VBoxContainer"]
+[node name="PlayButton" type="Button" parent="Control/CenterContainer/VBoxContainer"]
 margin_top = 33.0
 margin_right = 71.0
 margin_bottom = 58.0
-focus_mode = 0
-enabled_focus_mode = 0
 text = "Play"
+
+[node name="QuitButton" type="Button" parent="Control/CenterContainer/VBoxContainer"]
+margin_top = 62.0
+margin_right = 71.0
+margin_bottom = 87.0
+text = "Quit"
 
 [node name="Label2" type="Label" parent="Control/CenterContainer/VBoxContainer"]
 modulate = Color( 0.560784, 0.760784, 0.639216, 1 )
-margin_top = 62.0
+margin_top = 91.0
 margin_right = 71.0
-margin_bottom = 70.0
+margin_bottom = 99.0
 custom_fonts/font = ExtResource( 3 )
 text = "F11 to toggle fullscreen"
 align = 1

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=8 format=2]
+[gd_resource type="Theme" load_steps=9 format=2]
 
 [ext_resource path="res://UI/Theme/Font/StandartFont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Game/Ball/Ball.png" type="Texture" id=2]
@@ -54,6 +54,15 @@ corner_radius_bottom_left = 1
 corner_detail = 4
 anti_aliasing = false
 
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.101961, 0.176471, 0.207843, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
+corner_detail = 4
+
 [resource]
 default_font = ExtResource( 1 )
 Button/colors/font_color = Color( 0.541176, 0.870588, 0.792157, 1 )
@@ -66,3 +75,4 @@ Button/styles/hover = SubResource( 4 )
 Button/styles/normal = SubResource( 2 )
 Button/styles/pressed = SubResource( 5 )
 HSeparator/styles/separator = SubResource( 6 )
+PopupDialog/styles/panel = SubResource( 7 )
