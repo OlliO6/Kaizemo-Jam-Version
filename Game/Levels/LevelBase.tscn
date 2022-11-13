@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Game/KillingBody.cs" type="Script" id=1]
 [ext_resource path="res://Game/Tilesets/Spike.png" type="Texture" id=2]
@@ -6,6 +6,14 @@
 [ext_resource path="res://Game/Player/Player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Game/Finish/Finish.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Game/Levels/Level.cs" type="Script" id=6]
+[ext_resource path="res://Materials/Shaders/ColorReplace.tres" type="Shader" id=7]
+
+[sub_resource type="ShaderMaterial" id=9]
+resource_local_to_scene = true
+shader = ExtResource( 7 )
+shader_param/toReplace = null
+shader_param/newColor = Color( 1.13, 0.58, 1.98, 1 )
+shader_param/apply = false
 
 [sub_resource type="ConvexPolygonShape2D" id=7]
 points = PoolVector2Array( 1, 1, 15, 1, 15, 15, 1, 15 )
@@ -35,24 +43,21 @@ points = PoolVector2Array( 1, 1, 15, 1, 15, 15, 1, 15 )
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 6 )
+MaxYPos = 108.0
 _finish = NodePath("Finish")
 _player = NodePath("Player")
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
+maxYPos = 108.0
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
-current = true
-limit_bottom = 216
-limit_smoothed = true
-drag_margin_h_enabled = true
-drag_margin_v_enabled = true
-smoothing_enabled = true
-drag_margin_left = 0.15
-drag_margin_top = 0.15
-drag_margin_right = 0.15
-drag_margin_bottom = 0.15
-editor_draw_limits = true
-editor_draw_drag_margin = true
+[node name="Sprite" parent="Player" index="1"]
+material = SubResource( 9 )
+
+[node name="Camera" parent="Player" index="11"]
+limit_left = -200
+limit_top = -200
+limit_right = 200
+limit_bottom = 108
 
 [node name="Finish" parent="." instance=ExtResource( 5 )]
 
@@ -77,9 +82,4 @@ show_collision = true
 collision_use_parent = true
 format = 1
 
-[node name="KillArea" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 7
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KillArea"]
+[editable path="Player"]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Game/GameManager.cs" type="Script" id=1]
 [ext_resource path="res://Game/Levels/Level1.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Game/Levels/Level2.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Game/Levels/Level3.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -16,7 +17,7 @@ glow_bicubic_upscale = true
 [node name="Game" type="Node"]
 pause_mode = 2
 script = ExtResource( 1 )
-levels = [ ExtResource( 2 ), ExtResource( 3 ) ]
+levels = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ]
 _musicPlayer = NodePath("MusicPlayer")
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]

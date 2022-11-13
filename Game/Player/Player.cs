@@ -10,6 +10,7 @@ public partial class Player : KinematicBody2D, IDiveGainer, IFalling, IKillable
 {
     const float JumpLenienceTime = 0.1f;
 
+    [NodeRef] public Camera2D cam;
     [NodeRef] public Sprite sprite;
     [NodeRef] public AnimationTree anim;
     [NodeRef] public Particles2D jumpParticles, landParticles, diveParticles;
@@ -29,6 +30,7 @@ public partial class Player : KinematicBody2D, IDiveGainer, IFalling, IKillable
 
     [Export, InFoldout("Sounds")] private AudioStream jumpSound, diveSound, gainDiveSound, die;
 
+    [Export] public float maxYPos;
     [Export] private float dieMenuPopDelay;
 
     public IHoldAndThrowable heldItem;
@@ -77,6 +79,7 @@ public partial class Player : KinematicBody2D, IDiveGainer, IFalling, IKillable
         Debug.AddWatcher(this, nameof(Velocity));
         Debug.AddWatcher(this, nameof(isGrounded));
 
+        cam.LimitBottom = (int)maxYPos;
         AddChild(groundRememberTimer);
         anim.SetParam("Dead/current", 0);
     }
@@ -110,6 +113,9 @@ public partial class Player : KinematicBody2D, IDiveGainer, IFalling, IKillable
             if (isGrounded) Land();
             else LeaveGround();
         }
+
+        if (Position.y > maxYPos)
+            Kill();
 
         void HandleHorizontalMovement()
         {

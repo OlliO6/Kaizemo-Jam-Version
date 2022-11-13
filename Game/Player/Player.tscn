@@ -372,7 +372,7 @@ nodes/Land/position = Vector2( 580, 100 )
 nodes/RunSpeed/node = SubResource( 6 )
 nodes/RunSpeed/position = Vector2( 120, 240 )
 nodes/output/position = Vector2( 1220, 80 )
-node_connections = [ "Dead", 0, "Grounded", "Dead", 1, "Animation 4", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed", "RunSpeed", 0, "Animation", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "Land", 0, "GroundedState", "Land", 1, "Animation 3", "output", 0, "Dead" ]
+node_connections = [ "RunSpeed", 0, "Animation", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "Dead", 0, "Grounded", "Dead", 1, "Animation 4", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed", "output", 0, "Dead", "Land", 0, "GroundedState", "Land", 1, "Animation 3" ]
 
 [sub_resource type="Gradient" id=17]
 offsets = PoolRealArray( 0, 0.678715, 0.88755, 1 )
@@ -450,17 +450,18 @@ jumpingGravity = 200.0
 maxFallingSpeed = 164.513
 jumpCancelStrenght = 0.31
 groundedAcceleration = 461.441
-airAcceleration = 266.544
+airAcceleration = 250.0
 groundDamping = 0.35
 groundedStopDamping = 0.55
-airDamping = 0.19
-diveUpVelocity = Vector2( 40, -150 )
-diveHorizontalVelocity = Vector2( 175, -40 )
+airDamping = 0.2
+diveUpVelocity = Vector2( 36, -147 )
+diveHorizontalVelocity = Vector2( 185, -45 )
 jumpSound = SubResource( 28 )
 diveSound = SubResource( 29 )
 gainDiveSound = SubResource( 30 )
 die = ExtResource( 11 )
 dieMenuPopDelay = 1.0
+_cam = NodePath("Camera")
 _sprite = NodePath("Sprite")
 _anim = NodePath("AnimationTree")
 _jumpParticles = NodePath("JumpParticles")
@@ -577,3 +578,16 @@ stream = SubResource( 28 )
 
 [node name="DeadMenu" parent="CanvasLayer" instance=ExtResource( 10 )]
 visible = false
+
+[node name="Camera" type="Camera2D" parent="."]
+current = true
+limit_bottom = 216
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+drag_margin_left = 0.15
+drag_margin_top = 0.15
+drag_margin_right = 0.15
+drag_margin_bottom = 0.15
+editor_draw_limits = true
+editor_draw_drag_margin = true
