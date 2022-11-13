@@ -6,7 +6,7 @@ using Godot;
 using Shaking;
 
 [Additions.Debugging.DefaultColor(nameof(Colors.LightBlue), nameof(Colors.AliceBlue))]
-public partial class Player : KinematicBody2D, IDiveGainer
+public partial class Player : KinematicBody2D, IDiveGainer, IFalling
 {
     const float JumpLenienceTime = 0.1f;
 
@@ -29,7 +29,7 @@ public partial class Player : KinematicBody2D, IDiveGainer
     [Export, InFoldout("Sounds")] private AudioStream jumpSound, diveSound, gainDiveSound;
 
     public IHoldAndThrowable heldItem;
-    public Vector2 velocity;
+    private Vector2 velocity;
     private bool isJumping, isGrounded, _canDive;
 
     private Timer groundRememberTimer = new()
@@ -67,9 +67,11 @@ public partial class Player : KinematicBody2D, IDiveGainer
         }
     }
 
+    public Vector2 Velocity { get => velocity; set => velocity = value; }
+
     partial void OnReady()
     {
-        Debug.AddWatcher(this, nameof(velocity));
+        Debug.AddWatcher(this, nameof(Velocity));
         Debug.AddWatcher(this, nameof(isGrounded));
 
         AddChild(groundRememberTimer);
@@ -125,7 +127,7 @@ public partial class Player : KinematicBody2D, IDiveGainer
         {
             if (InputManager.IsJumpBuffered && (isGrounded || groundRememberTimer.TimeLeft != 0))
             {
-                Jump();
+                Jump(jumpVelocity);
                 return;
             }
 
@@ -136,10 +138,10 @@ public partial class Player : KinematicBody2D, IDiveGainer
                 return;
             }
 
-            if (velocity.y > 0) isJumping = false;
+            if (Velocity.y > 0) isJumping = false;
 
             velocity.y += (isJumping ? jumpingGravity : gravity) * delta;
-            if (velocity.y > maxFallingSpeed)
+            if (Velocity.y > maxFallingSpeed)
                 velocity.y = maxFallingSpeed;
         }
 
@@ -148,10 +150,10 @@ public partial class Player : KinematicBody2D, IDiveGainer
             Debug.LogPFrame(this, isJumping);
             if (isJumping)
             {
-                velocity = MoveAndSlide(velocity, Vector2.Up, maxSlides: 1, infiniteInertia: false);
+                Velocity = MoveAndSlide(Velocity, Vector2.Up, maxSlides: 1, infiniteInertia: false);
                 return;
             }
-            velocity = MoveAndSlide(velocity, Vector2.Up, infiniteInertia: false);
+            Velocity = MoveAndSlide(Velocity, Vector2.Up, infiniteInertia: false);
         }
     }
 
@@ -173,7 +175,7 @@ public partial class Player : KinematicBody2D, IDiveGainer
         if (!isGrounded)
         {
             anim.SetParam("Grounded/current", 0);
-            anim.SetParam("FallSpeed/blend_position", velocity.y);
+            anim.SetParam("FallSpeed/blend_position", Velocity.y);
             return;
         }
 
@@ -189,7 +191,7 @@ public partial class Player : KinematicBody2D, IDiveGainer
         anim.SetParam("GroundedState/current", (int)GroundedAnimationState.Idle);
     }
 
-    private void Jump()
+    private void Jump(float jumpVelocity)
     {
         isJumping = true;
         velocity.y = jumpVelocity;
@@ -246,21 +248,21 @@ public partial class Player : KinematicBody2D, IDiveGainer
         switch (direction)
         {
             case ActionDirection.Up:
-                velocity = diveUpVelocity * new Vector2(InputManager.GetPlayerHorizontalInput(), 1);
+                Velocity = diveUpVelocity * new Vector2(InputManager.GetPlayerHorizontalInput(), 1);
                 break;
 
             case ActionDirection.Down:
-                velocity = diveUpVelocity * new Vector2(InputManager.GetPlayerHorizontalInput(), -1);
+                Velocity = diveUpVelocity * new Vector2(InputManager.GetPlayerHorizontalInput(), -1);
                 break;
 
             case ActionDirection.Left:
                 FaceLeft = true;
-                velocity = diveHorizontalVelocity * new Vector2(-1, 1);
+                Velocity = diveHorizontalVelocity * new Vector2(-1, 1);
                 break;
 
             case ActionDirection.Right:
                 FaceLeft = false;
-                velocity = diveHorizontalVelocity;
+                Velocity = diveHorizontalVelocity;
                 break;
         }
 
@@ -283,10 +285,11 @@ public partial class Player : KinematicBody2D, IDiveGainer
 
         heldItem = item;
         item.IsPicked = true;
+        item.Holder = this;
 
         if (item.CanExtendAirTime && !isGrounded && InputManager.IsHoldingJump)
         {
-            Jump();
+            Jump(item.ExtendAirVelocity);
         }
     }
 

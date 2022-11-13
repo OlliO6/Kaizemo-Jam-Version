@@ -18,9 +18,11 @@ collision_layer = 4
 mode = 2
 physics_material_override = SubResource( 2 )
 script = ExtResource( 1 )
-horizontalThrowVelocity = Vector2( 125, -50 )
-upwardsThrowVelocity = Vector2( 0, -150 )
-downwardsThrowVelocity = Vector2( 0, 100 )
+ungrabbableTimeAfterRelease = 0.5
+holderVelocityTakeover = 0.2
+horizontalThrowVelocity = Vector2( 120, -50 )
+upwardsThrowVelocity = Vector2( 0, -170 )
+downwardsThrowVelocity = Vector2( 0, 60 )
 _pickArea = NodePath("Area2D")
 _collider = NodePath("CollisionShape2D")
 
@@ -31,6 +33,7 @@ texture = ExtResource( 2 )
 shape = SubResource( 5 )
 
 [node name="Area2D" type="Area2D" parent="."]
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 4 )

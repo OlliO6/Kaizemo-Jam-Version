@@ -4,19 +4,23 @@ using Additions;
 using BetterInspector;
 using Godot;
 
-public partial class Ball : RigidBody2D, IDiveGainer, IHoldAndThrowable
+public partial class Ball : RigidBody2D, IDiveGainer, IHoldAndThrowable, IFalling
 {
     [NodeRef] public Area2D pickArea;
     [NodeRef] public CollisionShape2D collider;
 
     [Export] public Vector2 HoldOffset { get; set; }
-    [Export, StartFoldout("Throwing")] private Vector2 horizontalThrowVelocity;
+    [Export] private float ungrabbableTimeAfterRelease;
+
+    [Export(PropertyHint.Range, "0,1"), StartFoldout("Throwing")] private float holderVelocityTakeover;
+    [Export] private Vector2 horizontalThrowVelocity;
     [Export] private Vector2 upwardsThrowVelocity;
     [Export, EndFoldout] private Vector2 downwardsThrowVelocity;
 
-    public Node2D holder;
+    public Node Holder { get; set; }
     public IDiveGainer bound;
 
+    private Vector2 prevHolderVelocity;
     private bool _picked;
 
     public bool IsPicked
@@ -31,13 +35,30 @@ public partial class Ball : RigidBody2D, IDiveGainer, IHoldAndThrowable
 
             if (value)
             {
+                pickArea.Monitoring = false;
                 collider.Disabled = true;
                 Mode = ModeEnum.Static;
                 return;
             }
-            collider.Disabled = false;
+
+            prevHolderVelocity = Holder is IFalling falling ? falling.Velocity : Vector2.Zero;
+            Holder = null;
+
             Mode = ModeEnum.Character;
+            collider.Disabled = false;
+
+            new TimeAwaiter(this, ungrabbableTimeAfterRelease, onCompleted: () =>
+            {
+                pickArea.Monitoring = true;
+
+            });
         }
+    }
+
+    public Vector2 Velocity
+    {
+        get => LinearVelocity;
+        set => LinearVelocity = value;
     }
 
     public void GainDive() => bound?.GainDive();
@@ -66,20 +87,23 @@ public partial class Ball : RigidBody2D, IDiveGainer, IHoldAndThrowable
         switch (direction)
         {
             case Player.ActionDirection.Up:
-                ApplyCentralImpulse(upwardsThrowVelocity);
+                Velocity = (upwardsThrowVelocity);
                 break;
 
             case Player.ActionDirection.Down:
-                ApplyCentralImpulse(downwardsThrowVelocity);
+                Velocity = (downwardsThrowVelocity);
                 break;
 
             case Player.ActionDirection.Left:
-                ApplyCentralImpulse(horizontalThrowVelocity * new Vector2(-1, 1));
+                Velocity = (horizontalThrowVelocity * new Vector2(-1, 1));
                 break;
 
             case Player.ActionDirection.Right:
-                ApplyCentralImpulse(horizontalThrowVelocity);
+                Velocity = (horizontalThrowVelocity);
                 break;
         }
+
+        Debug.Log(this, prevHolderVelocity);
+        Velocity += prevHolderVelocity * holderVelocityTakeover;
     }
 }
