@@ -14,6 +14,7 @@ public partial class Player : KinematicBody2D, IDiveGainer
     [NodeRef] public AnimationTree anim;
     [NodeRef] public Particles2D jumpParticles, landParticles, diveParticles;
     [NodeRef] public RemoteTransform2D heldItemRemote;
+    [NodeRef] public AudioStreamPlayer audioPlayer;
 
     [Export, StartFoldout("Movement")] public float jumpVelocity;
     [Export] public float gravity, jumpingGravity, maxFallingSpeed;
@@ -24,6 +25,8 @@ public partial class Player : KinematicBody2D, IDiveGainer
     [Export(PropertyHint.Range, "0,1")] public float airDamping;
     [Export] public Vector2 diveUpVelocity;
     [Export, EndFoldout] public Vector2 diveHorizontalVelocity;
+
+    [Export, InFoldout("Sounds")] private AudioStream jumpSound, diveSound, gainDiveSound;
 
     public IHoldAndThrowable heldItem;
     public Vector2 velocity;
@@ -196,7 +199,14 @@ public partial class Player : KinematicBody2D, IDiveGainer
         if (!InputManager.IsHoldingJump)
             CancelJump();
 
+        PlaySound(jumpSound);
         jumpParticles.Restart();
+    }
+
+    private void PlaySound(AudioStream sound)
+    {
+        audioPlayer.Stream = sound;
+        audioPlayer.Play();
     }
 
     private void CancelJump()
@@ -254,12 +264,14 @@ public partial class Player : KinematicBody2D, IDiveGainer
                 break;
         }
 
+        PlaySound(diveSound);
         diveParticles.Restart();
     }
 
     public void GainDive()
     {
         CanDive = true;
+        PlaySound(gainDiveSound);
     }
 
     public void PickupUpThrowable(Node2D node)

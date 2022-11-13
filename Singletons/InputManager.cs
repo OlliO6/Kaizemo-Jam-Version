@@ -83,7 +83,7 @@ public class InputManager : Node
         }
 
 
-        if (@event is InputEventKey key && key.Pressed && key.Scancode == (uint)KeyList.F11)
+        if (@event is InputEventKey key && !key.Pressed && key.Scancode == (uint)KeyList.F11)
         {
             ToggleFullscreen();
             return;

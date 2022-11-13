@@ -25,6 +25,8 @@ public partial class PauseMenu : PopupDialog
         resumeButton.Connect("pressed", this, nameof(Resume));
         restartButton.Connect("pressed", this, nameof(OnRestartPressed));
         menuButton.Connect("pressed", this, nameof(OnMenuPressed));
+
+        UISoundPlayer.RecognizeButtons(resumeButton, restartButton, menuButton);
     }
 
     private void OnMenuPressed()
@@ -60,6 +62,8 @@ public partial class PauseMenu : PopupDialog
     private void Pause()
     {
         if (GetTree().Paused) return;
+
+        UISoundPlayer.SkipNext();
 
         GetTree().Paused = true;
         PopupCenteredRatio();

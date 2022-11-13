@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://Game/Player/Player.cs" type="Script" id=1]
 [ext_resource path="res://Particles/DustParticle.png" type="Texture" id=2]
@@ -6,7 +6,18 @@
 [ext_resource path="res://Particles/DustMat.tres" type="Material" id=4]
 [ext_resource path="res://Materials/Shaders/ColorReplace.tres" type="Shader" id=5]
 [ext_resource path="res://Sounds/Jump.wav" type="AudioStream" id=6]
-[ext_resource path="res://UI/PauseMenu.tscn" type="PackedScene" id=7]
+[ext_resource path="res://UI/PauseMenu/PauseMenu.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Sounds/Dive.wav" type="AudioStream" id=8]
+[ext_resource path="res://Sounds/GainDive.wav" type="AudioStream" id=9]
+
+[sub_resource type="AudioStreamRandomPitch" id=28]
+audio_stream = ExtResource( 6 )
+
+[sub_resource type="AudioStreamRandomPitch" id=29]
+audio_stream = ExtResource( 8 )
+
+[sub_resource type="AudioStreamRandomPitch" id=30]
+audio_stream = ExtResource( 9 )
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 3.5, 7.5 )
@@ -342,7 +353,7 @@ nodes/Land/position = Vector2( 580, 100 )
 nodes/RunSpeed/node = SubResource( 6 )
 nodes/RunSpeed/position = Vector2( 120, 240 )
 nodes/output/position = Vector2( 1000, 0 )
-node_connections = [ "Land", 0, "GroundedState", "Land", 1, "Animation 3", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed", "RunSpeed", 0, "Animation", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "output", 0, "Grounded" ]
+node_connections = [ "output", 0, "Grounded", "Land", 0, "GroundedState", "Land", 1, "Animation 3", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "RunSpeed", 0, "Animation", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed" ]
 
 [sub_resource type="Gradient" id=17]
 offsets = PoolRealArray( 0, 0.678715, 0.88755, 1 )
@@ -410,9 +421,6 @@ color_ramp = SubResource( 18 )
 anim_offset = 0.73
 anim_offset_random = 0.46
 
-[sub_resource type="AudioStreamRandomPitch" id=28]
-audio_stream = ExtResource( 6 )
-
 [node name="Player" type="KinematicBody2D"]
 z_index = 1
 collision_layer = 2
@@ -429,12 +437,16 @@ groundedStopDamping = 0.55
 airDamping = 0.19
 diveUpVelocity = Vector2( 40, -150 )
 diveHorizontalVelocity = Vector2( 175, -40 )
+jumpSound = SubResource( 28 )
+diveSound = SubResource( 29 )
+gainDiveSound = SubResource( 30 )
 _sprite = NodePath("Sprite")
 _anim = NodePath("AnimationTree")
 _jumpParticles = NodePath("JumpParticles")
 _landParticles = NodePath("LandParticles")
 _diveParticles = NodePath("DiveParticles")
 _heldItemRemote = NodePath("HeldItemPosition/HeldItemRemote")
+_audioPlayer = NodePath("AudioPlayer")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.5, 0.5 )
@@ -537,7 +549,7 @@ position = Vector2( 1, -10 )
 update_rotation = false
 update_scale = false
 
-[node name="JumpPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource( 28 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

@@ -16,10 +16,13 @@ public partial class MainMenu : CanvasLayer
     {
         gameScene = GD.Load<PackedScene>(gameScenePath);
 
+        UISoundPlayer.SkipNext();
         playButton.GrabFocus();
 
         playButton.Connect("pressed", this, nameof(OnPlayPressed));
         quitButton.Connect("pressed", this, nameof(OnQuitPressed));
+
+        UISoundPlayer.RecognizeButtons(playButton, quitButton);
     }
 
     private void OnPlayPressed()
