@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://Game/Player/Player.cs" type="Script" id=1]
 [ext_resource path="res://Particles/DustParticle.png" type="Texture" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://UI/PauseMenu/PauseMenu.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Sounds/Dive.wav" type="AudioStream" id=8]
 [ext_resource path="res://Sounds/GainDive.wav" type="AudioStream" id=9]
+[ext_resource path="res://UI/DeadMenu/DeadMenu.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Sounds/PlayerDie.wav" type="AudioStream" id=11]
 
 [sub_resource type="AudioStreamRandomPitch" id=28]
 audio_stream = ExtResource( 6 )
@@ -23,10 +25,14 @@ audio_stream = ExtResource( 9 )
 extents = Vector2( 3.5, 7.5 )
 
 [sub_resource type="ShaderMaterial" id=26]
+resource_local_to_scene = true
 shader = ExtResource( 5 )
 shader_param/toReplace = null
 shader_param/newColor = Color( 1.13, 0.58, 1.98, 1 )
 shader_param/apply = false
+
+[sub_resource type="Animation" id=32]
+resource_name = "Die"
 
 [sub_resource type="Animation" id=10]
 resource_name = "Fall"
@@ -298,8 +304,17 @@ animation = "Idle"
 [sub_resource type="AnimationNodeAnimation" id=22]
 animation = "Land"
 
+[sub_resource type="AnimationNodeAnimation" id=33]
+
 [sub_resource type="AnimationNodeAnimation" id=5]
 animation = "Run"
+
+[sub_resource type="AnimationNodeTransition" id=31]
+input_count = 2
+input_0/name = "No"
+input_0/auto_advance = false
+input_1/name = "Yes"
+input_1/auto_advance = false
 
 [sub_resource type="AnimationNodeAnimation" id=12]
 animation = "Fall"
@@ -335,13 +350,17 @@ fadeout_time = 0.0
 [sub_resource type="AnimationNodeTimeScale" id=6]
 
 [sub_resource type="AnimationNodeBlendTree" id=8]
-graph_offset = Vector2( 136.408, -55.7588 )
+graph_offset = Vector2( 657.326, -107.4 )
 nodes/Animation/node = SubResource( 5 )
 nodes/Animation/position = Vector2( -40, 240 )
 "nodes/Animation 2/node" = SubResource( 9 )
 "nodes/Animation 2/position" = Vector2( 100, 80 )
 "nodes/Animation 3/node" = SubResource( 22 )
 "nodes/Animation 3/position" = Vector2( 380, 240 )
+"nodes/Animation 4/node" = SubResource( 33 )
+"nodes/Animation 4/position" = Vector2( 800, 180 )
+nodes/Dead/node = SubResource( 31 )
+nodes/Dead/position = Vector2( 1020, 80 )
 nodes/FallSpeed/node = SubResource( 14 )
 nodes/FallSpeed/position = Vector2( 580, -100 )
 nodes/Grounded/node = SubResource( 24 )
@@ -352,8 +371,8 @@ nodes/Land/node = SubResource( 23 )
 nodes/Land/position = Vector2( 580, 100 )
 nodes/RunSpeed/node = SubResource( 6 )
 nodes/RunSpeed/position = Vector2( 120, 240 )
-nodes/output/position = Vector2( 1000, 0 )
-node_connections = [ "output", 0, "Grounded", "Land", 0, "GroundedState", "Land", 1, "Animation 3", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "RunSpeed", 0, "Animation", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed" ]
+nodes/output/position = Vector2( 1220, 80 )
+node_connections = [ "Land", 0, "GroundedState", "Land", 1, "Animation 3", "Dead", 0, "Grounded", "Dead", 1, "Animation 4", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed", "RunSpeed", 0, "Animation", "output", 0, "Dead" ]
 
 [sub_resource type="Gradient" id=17]
 offsets = PoolRealArray( 0, 0.678715, 0.88755, 1 )
@@ -440,6 +459,8 @@ diveHorizontalVelocity = Vector2( 175, -40 )
 jumpSound = SubResource( 28 )
 diveSound = SubResource( 29 )
 gainDiveSound = SubResource( 30 )
+die = ExtResource( 11 )
+dieMenuPopDelay = 1.0
 _sprite = NodePath("Sprite")
 _anim = NodePath("AnimationTree")
 _jumpParticles = NodePath("JumpParticles")
@@ -447,6 +468,7 @@ _landParticles = NodePath("LandParticles")
 _diveParticles = NodePath("DiveParticles")
 _heldItemRemote = NodePath("HeldItemPosition/HeldItemRemote")
 _audioPlayer = NodePath("AudioPlayer")
+_deadMenu = NodePath("CanvasLayer/DeadMenu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.5, 0.5 )
@@ -470,6 +492,7 @@ smoothing_enabled = true
 editor_draw_screen = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Die = SubResource( 32 )
 anims/Fall = SubResource( 10 )
 anims/Idle = SubResource( 2 )
 anims/Jump = SubResource( 11 )
@@ -481,6 +504,7 @@ anims/Run = SubResource( 4 )
 tree_root = SubResource( 8 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
+parameters/Dead/current = 0
 parameters/FallSpeed/blend_position = 1.575
 parameters/Grounded/current = 1
 parameters/GroundedState/current = 0
@@ -555,3 +579,5 @@ stream = SubResource( 28 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource( 7 )]
+
+[node name="DeadMenu" parent="CanvasLayer" instance=ExtResource( 10 )]

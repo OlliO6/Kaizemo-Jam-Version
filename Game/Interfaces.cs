@@ -20,3 +20,8 @@ public interface IFalling
 {
     public Vector2 Velocity { get; set; }
 }
+
+public interface IKillable
+{
+    public void Kill();
+}

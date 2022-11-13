@@ -32,6 +32,8 @@ public class UISoundPlayer : AudioStreamPlayer
         AddChild(selectPlayer);
         selectPlayer.Stream = selectSound;
 
+        VolumeDb = -15;
+
         PauseMode = PauseModeEnum.Process;
         Stream = blipSound;
         GetTree().Root.Connect("gui_focus_changed", this, nameof(OnFocusChanged));

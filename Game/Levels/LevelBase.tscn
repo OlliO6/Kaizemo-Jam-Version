@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Game/Levels/KillingBody.cs" type="Script" id=1]
+[ext_resource path="res://Game/Levels/Tilesets/Spike.png" type="Texture" id=2]
+[ext_resource path="res://Game/Levels/Tilesets/Platforms.tres" type="TileSet" id=3]
+[ext_resource path="res://Game/Player/Player.tscn" type="PackedScene" id=4]
+
+[sub_resource type="ConvexPolygonShape2D" id=7]
+points = PoolVector2Array( 1, 1, 15, 1, 15, 15, 1, 15 )
+
+[sub_resource type="TileSet" id=8]
+0/name = "Spike.png 0"
+0/texture = ExtResource( 2 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 16, 16 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape = SubResource( 7 )
+0/shape_one_way = false
+0/shape_one_way_margin = 1.0
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 7 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+
+[node name="Level" type="Node2D"]
+
+[node name="Platforms" type="StaticBody2D" parent="."]
+
+[node name="TileMap" type="TileMap" parent="Platforms"]
+tile_set = ExtResource( 3 )
+cell_size = Vector2( 16, 16 )
+collision_use_parent = true
+format = 1
+
+[node name="Spikes" type="StaticBody2D" parent="."]
+collision_layer = 16
+script = ExtResource( 1 )
+toKill = 2
+collisionObject = NodePath("TileMap")
+
+[node name="TileMap" type="TileMap" parent="Spikes"]
+tile_set = SubResource( 8 )
+cell_size = Vector2( 16, 16 )
+show_collision = true
+collision_use_parent = true
+format = 1
+
+[node name="Player" parent="." instance=ExtResource( 4 )]

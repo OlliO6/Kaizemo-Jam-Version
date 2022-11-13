@@ -29,6 +29,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/color-palette/PaletteImporter.gd"
 }, {
+"base": "Spatial",
+"class": "SceneMap",
+"language": "GDScript",
+"path": "res://addons/scene_map/scene_map.gd"
+}, {
+"base": "Resource",
+"class": "ScenePalette",
+"language": "GDScript",
+"path": "res://addons/scene_map/scene_palette.gd"
+}, {
 "base": "RichTextEffect",
 "class": "TintTextEffect",
 "language": "GDScript",
@@ -39,6 +49,8 @@ _global_script_class_icons={
 "FlexGridContainer": "res://addons/color-palette/utilities/FlexGridContainerIcon.png",
 "Palette": "",
 "PaletteImporter": "",
+"SceneMap": "res://addons/scene_map/scene_map.svg",
+"ScenePalette": "res://addons/scene_map/scene_palette.svg",
 "TintTextEffect": ""
 }
 
@@ -74,7 +86,7 @@ scene_naming=1
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/BetterFileSystem/plugin.cfg", "res://addons/BetterInspector/plugin.cfg", "res://addons/DebugOverlay/plugin.cfg", "res://addons/Diadot/plugin.cfg", "res://addons/Shake/plugin.cfg", "res://addons/color-palette/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/BetterFileSystem/plugin.cfg", "res://addons/BetterInspector/plugin.cfg", "res://addons/DebugOverlay/plugin.cfg", "res://addons/Diadot/plugin.cfg", "res://addons/Shake/plugin.cfg", "res://addons/color-palette/plugin.cfg", "res://addons/component_view/plugin.cfg" )
 
 [gui]
 
@@ -159,6 +171,8 @@ Pause={
 2d_physics/layer_1="World"
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Item"
+2d_physics/layer_5="TroughPlayer"
+2d_physics/layer_6="TroughItems"
 
 [physics]
 

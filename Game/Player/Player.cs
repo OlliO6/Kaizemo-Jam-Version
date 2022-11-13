@@ -6,7 +6,7 @@ using Godot;
 using Shaking;
 
 [Additions.Debugging.DefaultColor(nameof(Colors.LightBlue), nameof(Colors.AliceBlue))]
-public partial class Player : KinematicBody2D, IDiveGainer, IFalling
+public partial class Player : KinematicBody2D, IDiveGainer, IFalling, IKillable
 {
     const float JumpLenienceTime = 0.1f;
 
@@ -15,6 +15,7 @@ public partial class Player : KinematicBody2D, IDiveGainer, IFalling
     [NodeRef] public Particles2D jumpParticles, landParticles, diveParticles;
     [NodeRef] public RemoteTransform2D heldItemRemote;
     [NodeRef] public AudioStreamPlayer audioPlayer;
+    [NodeRef] public DeadMenu deadMenu;
 
     [Export, StartFoldout("Movement")] public float jumpVelocity;
     [Export] public float gravity, jumpingGravity, maxFallingSpeed;
@@ -26,7 +27,9 @@ public partial class Player : KinematicBody2D, IDiveGainer, IFalling
     [Export] public Vector2 diveUpVelocity;
     [Export, EndFoldout] public Vector2 diveHorizontalVelocity;
 
-    [Export, InFoldout("Sounds")] private AudioStream jumpSound, diveSound, gainDiveSound;
+    [Export, InFoldout("Sounds")] private AudioStream jumpSound, diveSound, gainDiveSound, die;
+
+    [Export] private float dieMenuPopDelay;
 
     public IHoldAndThrowable heldItem;
     private Vector2 velocity;
@@ -75,6 +78,7 @@ public partial class Player : KinematicBody2D, IDiveGainer, IFalling
         Debug.AddWatcher(this, nameof(isGrounded));
 
         AddChild(groundRememberTimer);
+        anim.SetParam("Dead/current", 0);
     }
 
     public override void _EnterTree()
@@ -291,6 +295,22 @@ public partial class Player : KinematicBody2D, IDiveGainer, IFalling
         {
             Jump(item.ExtendAirVelocity);
         }
+    }
+
+    public void Kill()
+    {
+        SetProcess(false);
+        SetPhysicsProcess(false);
+        PauseMode = PauseModeEnum.Process;
+
+        anim.SetParam("Dead/current", 1);
+
+        PlaySound(die);
+
+        new TimeAwaiter(this, dieMenuPopDelay,
+            onCompleted: deadMenu.OnPlayerDied);
+
+        Debug.LogU(this, "Died");
     }
 
     public enum ActionDirection
