@@ -47,4 +47,17 @@ public partial class SceneManager : CanvasLayer
     {
         await LoadScene(Instance.menuScene);
     }
+
+    public static async Task ReloadCurrentSceneOrLevel()
+    {
+        if (Instance.GetTree().CurrentScene is GameManager game)
+        {
+            game.LoadLevel();
+            return;
+        }
+
+        await StartTransition();
+        Instance.GetTree().ReloadCurrentScene();
+        await EndTransition();
+    }
 }

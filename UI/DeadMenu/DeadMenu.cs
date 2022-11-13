@@ -20,7 +20,7 @@ public partial class DeadMenu : PopupDialog
 
     private void OnMenuPressed() => SceneManager.LoadMenu();
 
-    private void OnRestartPressed() => SceneManager.ReloadCurrentScene();
+    private void OnRestartPressed() => SceneManager.ReloadCurrentSceneOrLevel();
 
     public void OnPlayerDied()
     {

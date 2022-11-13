@@ -31,7 +31,7 @@ public partial class PauseMenu : PopupDialog
 
     private void OnMenuPressed() => SceneManager.LoadMenu();
 
-    private void OnRestartPressed() => SceneManager.ReloadCurrentScene();
+    private void OnRestartPressed() => SceneManager.ReloadCurrentSceneOrLevel();
 
     private void TogglePaused()
     {

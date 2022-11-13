@@ -372,7 +372,7 @@ nodes/Land/position = Vector2( 580, 100 )
 nodes/RunSpeed/node = SubResource( 6 )
 nodes/RunSpeed/position = Vector2( 120, 240 )
 nodes/output/position = Vector2( 1220, 80 )
-node_connections = [ "Land", 0, "GroundedState", "Land", 1, "Animation 3", "RunSpeed", 0, "Animation", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "output", 0, "Dead", "Dead", 0, "Grounded", "Dead", 1, "Animation 4" ]
+node_connections = [ "Dead", 0, "Grounded", "Dead", 1, "Animation 4", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed", "RunSpeed", 0, "Animation", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "Land", 0, "GroundedState", "Land", 1, "Animation 3", "output", 0, "Dead" ]
 
 [sub_resource type="Gradient" id=17]
 offsets = PoolRealArray( 0, 0.678715, 0.88755, 1 )
@@ -485,11 +485,6 @@ frame = 1
 __meta__ = {
 "_editor_description_": ""
 }
-
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-smoothing_enabled = true
-editor_draw_screen = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Die = SubResource( 32 )

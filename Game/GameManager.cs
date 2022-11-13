@@ -19,7 +19,7 @@ public partial class GameManager : Node
         set
         {
             _currentLevelIdx = value;
-            CallDeferred(nameof(SwitchLevel));
+            CallDeferred(nameof(LoadLevel));
         }
     }
 
@@ -28,7 +28,7 @@ public partial class GameManager : Node
         SetLevel();
     }
 
-    private async void SwitchLevel()
+    public async void LoadLevel()
     {
         await SceneManager.StartTransition();
         SetLevel();
