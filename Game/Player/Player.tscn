@@ -372,7 +372,7 @@ nodes/Land/position = Vector2( 580, 100 )
 nodes/RunSpeed/node = SubResource( 6 )
 nodes/RunSpeed/position = Vector2( 120, 240 )
 nodes/output/position = Vector2( 1220, 80 )
-node_connections = [ "Land", 0, "GroundedState", "Land", 1, "Animation 3", "Dead", 0, "Grounded", "Dead", 1, "Animation 4", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed", "RunSpeed", 0, "Animation", "output", 0, "Dead" ]
+node_connections = [ "Land", 0, "GroundedState", "Land", 1, "Animation 3", "RunSpeed", 0, "Animation", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "output", 0, "Dead", "Dead", 0, "Grounded", "Dead", 1, "Animation 4" ]
 
 [sub_resource type="Gradient" id=17]
 offsets = PoolRealArray( 0, 0.678715, 0.88755, 1 )
@@ -581,3 +581,4 @@ stream = SubResource( 28 )
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource( 7 )]
 
 [node name="DeadMenu" parent="CanvasLayer" instance=ExtResource( 10 )]
+visible = false

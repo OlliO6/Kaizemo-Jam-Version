@@ -301,14 +301,17 @@ public partial class Player : KinematicBody2D, IDiveGainer, IFalling, IKillable
     {
         SetProcess(false);
         SetPhysicsProcess(false);
-        PauseMode = PauseModeEnum.Process;
 
         anim.SetParam("Dead/current", 1);
 
         PlaySound(die);
 
         new TimeAwaiter(this, dieMenuPopDelay,
-            onCompleted: deadMenu.OnPlayerDied);
+            onCompleted: () =>
+            {
+                PauseMode = PauseModeEnum.Process;
+                deadMenu.OnPlayerDied();
+            });
 
         Debug.LogU(this, "Died");
     }

@@ -11,7 +11,6 @@ public class KillingArea : Area2D
 
     private void OnBodyEntered(Node body)
     {
-        Debug.Log(this, "body_entered");
         if (body is IKillable killable)
             killable.Kill();
     }

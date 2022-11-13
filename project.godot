@@ -29,16 +29,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/color-palette/PaletteImporter.gd"
 }, {
-"base": "Spatial",
-"class": "SceneMap",
-"language": "GDScript",
-"path": "res://addons/scene_map/scene_map.gd"
-}, {
-"base": "Resource",
-"class": "ScenePalette",
-"language": "GDScript",
-"path": "res://addons/scene_map/scene_palette.gd"
-}, {
 "base": "RichTextEffect",
 "class": "TintTextEffect",
 "language": "GDScript",
@@ -49,10 +39,20 @@ _global_script_class_icons={
 "FlexGridContainer": "res://addons/color-palette/utilities/FlexGridContainerIcon.png",
 "Palette": "",
 "PaletteImporter": "",
-"SceneMap": "res://addons/scene_map/scene_map.svg",
-"ScenePalette": "res://addons/scene_map/scene_palette.svg",
 "TintTextEffect": ""
 }
+
+[addons]
+
+instance_dock/scenes=[ {
+"name": "Level Objects",
+"scenes": [ {
+"scene": "res://Game/DiveSpender/DiveSpender.tscn"
+}, {
+"scene": "res://Game/Ball/Ball.tscn"
+} ],
+"scroll": 0
+} ]
 
 [application]
 
@@ -69,6 +69,7 @@ default_bus_layout="res://AudiobusLayout.tres"
 Debug="*res://addons/DebugOverlay/DebugOverlay.tscn"
 InputManager="*res://Singletons/InputManager.cs"
 UISoundPlayer="*res://Singletons/UISoundPlayer.cs"
+SceneManager="*res://Singletons/SceneTransition/SceneManager.tscn"
 
 [display]
 
@@ -86,7 +87,7 @@ scene_naming=1
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/BetterFileSystem/plugin.cfg", "res://addons/BetterInspector/plugin.cfg", "res://addons/DebugOverlay/plugin.cfg", "res://addons/Diadot/plugin.cfg", "res://addons/Shake/plugin.cfg", "res://addons/color-palette/plugin.cfg", "res://addons/component_view/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/BetterFileSystem/plugin.cfg", "res://addons/BetterInspector/plugin.cfg", "res://addons/DebugOverlay/plugin.cfg", "res://addons/Diadot/plugin.cfg", "res://addons/InstanceDock/plugin.cfg", "res://addons/Shake/plugin.cfg", "res://addons/color-palette/plugin.cfg" )
 
 [gui]
 

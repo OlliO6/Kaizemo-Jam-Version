@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://UI/MainMenu.cs" type="Script" id=1]
-[ext_resource path="res://Game/Levels/Tilesets/Platforms.tres" type="TileSet" id=2]
+[ext_resource path="res://Game/Tilesets/Platforms.tres" type="TileSet" id=2]
 [ext_resource path="res://UI/Theme/Font/SmallFont.tres" type="DynamicFont" id=3]
 [ext_resource path="res://UI/Theme/Font/OutlinedFont.tres" type="DynamicFont" id=4]
 [ext_resource path="res://UI/Theme/Theme.tres" type="Theme" id=5]
@@ -9,7 +9,7 @@
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource( 1 )
 gameScenePath = "res://Game/Game.tscn"
-playgroundScenePath = "res://Playground.tscn"
+playgroundScenePath = "res://Game/Playground.tscn"
 _playButton = NodePath("Control/VBoxContainer/PlayButton")
 _quitButton = NodePath("Control/VBoxContainer/QuitButton")
 _playgroundButton = NodePath("Control/VBoxContainer/PlaygroundButton")

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/scene_palette.svg-b293557348b8c9bd0a80bde84a66bb8a.stex"
+path="res://.import/Platform.png-16ff891fe7bf94f83db99a8f7ed54eac.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/scene_map/scene_palette.svg"
-dest_files=[ "res://.import/scene_palette.svg-b293557348b8c9bd0a80bde84a66bb8a.stex" ]
+source_file="res://Game/Tilesets/Platform.png"
+dest_files=[ "res://.import/Platform.png-16ff891fe7bf94f83db99a8f7ed54eac.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -31,5 +31,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=false
+detect_3d=true
 svg/scale=1.0

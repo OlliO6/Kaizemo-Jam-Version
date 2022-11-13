@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Spike.png-629f98911462336ef69052cab2031b26.stex"
+path="res://.import/Spike.png-b3801897d94709bd58d812184c22765e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Game/Levels/Tilesets/Spike.png"
-dest_files=[ "res://.import/Spike.png-629f98911462336ef69052cab2031b26.stex" ]
+source_file="res://Game/Tilesets/Spike.png"
+dest_files=[ "res://.import/Spike.png-b3801897d94709bd58d812184c22765e.stex" ]
 
 [params]
 
