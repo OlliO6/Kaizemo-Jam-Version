@@ -35,7 +35,12 @@ public partial class Level : Node2D
         GetNode<Camera2D>(_player + "/Camera").Set("limit_bottom", (int)MaxYPos);
     }
 
-    partial void OnReady() => finish.Finished += Finish;
+    partial void OnReady()
+    {
+        if (Engine.EditorHint) return;
+
+        finish.Finished += Finish;
+    }
 
     private void Finish()
     {

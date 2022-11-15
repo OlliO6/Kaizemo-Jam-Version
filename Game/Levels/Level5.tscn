@@ -14,9 +14,6 @@ shader_param/apply = false
 
 [node name="Level" instance=ExtResource( 1 )]
 
-[node name="Player" parent="." index="0"]
-position = Vector2( 392, -168 )
-
 [node name="Sprite" parent="Player" index="1"]
 material = SubResource( 1 )
 
@@ -48,8 +45,5 @@ position = Vector2( 464, -72 )
 
 [node name="Ball" parent="." index="8" instance=ExtResource( 4 )]
 position = Vector2( 56, 40 )
-
-[node name="Ball2" parent="." index="9" instance=ExtResource( 4 )]
-position = Vector2( 400, -136 )
 
 [editable path="Player"]
