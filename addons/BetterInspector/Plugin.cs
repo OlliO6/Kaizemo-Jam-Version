@@ -32,7 +32,7 @@ public class Plugin : EditorPlugin
 
         RemoveInspectorPlugin(typedPathInspectorPlugin);
         RemoveInspectorPlugin(foldoutInspectorPlugin);
-        // ClearResourceTypes();
+        ClearResourceTypes();
     }
 
     public static Texture GetIcon(string name)
@@ -74,7 +74,7 @@ public class Plugin : EditorPlugin
         RestartInspectorPlugin(ref foldoutInspectorPlugin);
 
         Reselect();
-        // ResetResourceTypes();
+        ResetResourceTypes();
 
         void Reselect()
         {

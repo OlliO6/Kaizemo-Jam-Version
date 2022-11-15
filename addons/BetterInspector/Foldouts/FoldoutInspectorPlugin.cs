@@ -23,12 +23,15 @@ public class FoldoutInspectorPlugin : EditorInspectorPlugin
 
     public override bool ParseProperty(Godot.Object @object, int typeArg, string path, int hint, string hintText, int usage)
     {
+        // Do nothing if it is e.g. list
+        if (@object == null) return false;
+
         string propName = path.GetPropName();
         Foldout foldout = null;
 
         string foldoutName = CheckForFoldout(
             propName,
-            @object.GetInEditorTypeCached(),
+            @object?.GetInEditorTypeCached(),
             out FoldoutPosition position,
             out bool isExpressionProperty,
             out bool dontSetPrevFoldout,

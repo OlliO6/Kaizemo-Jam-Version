@@ -58,6 +58,7 @@ instance_dock/scenes=[ {
 
 config/name="RocketBeansGame"
 run/main_scene="res://UI/MainMenu.tscn"
+boot_splash/use_filter=false
 config/icon="res://Icons/Icon.png"
 config/windows_native_icon="res://Icons/BallIcon.ico"
 
