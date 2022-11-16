@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="C:/Users/olive/GodotProjects/RocketBeansGame/addons/Shake/ShakeProfile.cs" type="Script" id=1]
+
+[sub_resource type="Curve" id=34]
+bake_resolution = 64
+
+[resource]
+script = ExtResource( 1 )
+amplitude = 0.3
+time = 0.15
+speed = 1.0
+amountCurve = SubResource( 34 )
