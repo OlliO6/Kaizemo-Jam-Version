@@ -56,7 +56,7 @@ instance_dock/scenes=[ {
 
 [application]
 
-config/name="RocketBeansGame"
+config/name="Kaizemo"
 run/main_scene="res://UI/MainMenu.tscn"
 boot_splash/use_filter=false
 config/icon="res://Icons/Icon.png"
@@ -89,7 +89,7 @@ scene_naming=1
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/BetterFileSystem/plugin.cfg", "res://addons/BetterInspector/plugin.cfg", "res://addons/DebugOverlay/plugin.cfg", "res://addons/Diadot/plugin.cfg", "res://addons/InstanceDock/plugin.cfg", "res://addons/Shake/plugin.cfg", "res://addons/color-palette/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/InstanceDock/plugin.cfg", "res://addons/color-palette/plugin.cfg" )
 
 [gui]
 
@@ -176,6 +176,10 @@ Pause={
 2d_physics/layer_3="Item"
 2d_physics/layer_5="TroughPlayer"
 2d_physics/layer_6="TroughItems"
+
+[mono]
+
+project/assembly_name="Kaizemo"
 
 [physics]
 

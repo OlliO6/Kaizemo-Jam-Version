@@ -20,7 +20,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/RocketBeansGame.csproj",
+                "${workspaceFolder}/Kaizemo.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -34,7 +34,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/RocketBeansGame.csproj"
+                "${workspaceFolder}/Kaizemo.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
