@@ -1,7 +1,6 @@
 #if TOOLS
 namespace Shaking;
 
-using System;
 using Godot;
 
 [Tool]

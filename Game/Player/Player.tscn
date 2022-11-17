@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://Game/Player/Player.cs" type="Script" id=1]
 [ext_resource path="res://Particles/DustParticle.png" type="Texture" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://Sounds/GainDive.wav" type="AudioStream" id=9]
 [ext_resource path="res://UI/DeadMenu/DeadMenu.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Sounds/PlayerDie.wav" type="AudioStream" id=11]
+[ext_resource path="res://addons/Shake/ShakeProfile.cs" type="Script" id=12]
+[ext_resource path="res://addons/Shake/CamShaker.cs" type="Script" id=13]
 
 [sub_resource type="AudioStreamRandomPitch" id=28]
 audio_stream = ExtResource( 6 )
@@ -372,7 +374,7 @@ nodes/Land/position = Vector2( 580, 100 )
 nodes/RunSpeed/node = SubResource( 6 )
 nodes/RunSpeed/position = Vector2( 120, 240 )
 nodes/output/position = Vector2( 1220, 80 )
-node_connections = [ "RunSpeed", 0, "Animation", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "Dead", 0, "Grounded", "Dead", 1, "Animation 4", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed", "output", 0, "Dead", "Land", 0, "GroundedState", "Land", 1, "Animation 3" ]
+node_connections = [ "Land", 0, "GroundedState", "Land", 1, "Animation 3", "Grounded", 0, "FallSpeed", "Grounded", 1, "Land", "RunSpeed", 0, "Animation", "Dead", 0, "Grounded", "Dead", 1, "Animation 4", "GroundedState", 0, "Animation 2", "GroundedState", 1, "RunSpeed", "output", 0, "Dead" ]
 
 [sub_resource type="Gradient" id=17]
 offsets = PoolRealArray( 0, 0.678715, 0.88755, 1 )
@@ -440,6 +442,18 @@ color_ramp = SubResource( 18 )
 anim_offset = 0.73
 anim_offset_random = 0.46
 
+[sub_resource type="Curve" id=35]
+bake_resolution = 24
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Resource" id=34]
+resource_name = "ShakeProfile"
+script = ExtResource( 12 )
+amplitude = 1.281
+time = 6.0
+speed = 1.0
+amountCurve = SubResource( 35 )
+
 [node name="Player" type="KinematicBody2D"]
 z_index = 1
 collision_layer = 2
@@ -470,6 +484,7 @@ _diveParticles = NodePath("DiveParticles")
 _heldItemRemote = NodePath("HeldItemPosition/HeldItemRemote")
 _audioPlayer = NodePath("AudioPlayer")
 _deadMenu = NodePath("CanvasLayer/DeadMenu")
+_camShaker = NodePath("Camera/Shaker")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.5, 0.5 )
@@ -591,3 +606,12 @@ drag_margin_right = 0.15
 drag_margin_bottom = 0.15
 editor_draw_limits = true
 editor_draw_drag_margin = true
+
+[node name="Shaker" type="Node2D" parent="Camera"]
+script = ExtResource( 13 )
+rotationMagnitude = 0.3
+positionMagnitude = 5.0
+speed = 25.0
+amountThreshold = 0.05
+defaultProfile = SubResource( 34 )
+_camera = NodePath("..")

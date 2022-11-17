@@ -102,7 +102,7 @@ public class NodeRefGenerator : ISourceGenerator
                 sb.AppendLine($"namespace {@namespace?.Name.ToString()}");
                 sb.AppendLine("{");
             }
-            
+
             sb.AppendLine($"partial class {@class.Identifier} : {@class.BaseList?.Types.First()?.Type.ToString()}");
             sb.AppendLine("{");
             foreach (var prop in properties)
@@ -113,6 +113,7 @@ public class NodeRefGenerator : ISourceGenerator
             sb.AppendLine();
             sb.AppendLine("    public override void _Ready()");
             sb.AppendLine("    {");
+            sb.AppendLine("        base._Ready();");
             foreach (var prop in properties)
                 sb.AppendLine($"        {prop.name} = GetNodeOrNull<{prop.type}>(_{prop.name});");
             sb.AppendLine("        OnReady();");
